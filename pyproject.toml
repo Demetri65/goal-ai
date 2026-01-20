@@ -1,0 +1,29 @@
+[build-system]
+requires = ["hatchling>=1.21.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "smart-got"
+version = "0.0.1"
+description = "SMART-GoT prototype scaffold: staged SMART goals with an adaptive goal graph backend"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name="SMART-GoT Prototype"}]
+dependencies = [
+  "pydantic>=2.6",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+]
+llm = [
+  "openai>=1.0.0",
+]
+
+[project.scripts]
+smartgot = "smart_got.run_cli:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

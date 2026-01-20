@@ -1,0 +1,560 @@
+{
+  "edges": [
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.compile_the_complete_application_package",
+      "type": "subgoal_of"
+    }
+  ],
+  "gates": [
+    {
+      "approved_at": "2026-01-13T21:24:54.302813Z",
+      "note": "interactive ok",
+      "stage": 1,
+      "status": "approved"
+    }
+  ],
+  "meta": {
+    "intent": "help me draft a proposal to national institute of mental health due by febuary 15 2026",
+    "rationale": "Securing NIMH funding will enable the proposed mental health research, support personnel and resources, and advance scientific understanding and interventions in a prioritized area of need.",
+    "root_goal_id": "goal.v1"
+  },
+  "nodes": {
+    "goal.subgoal.init.assemble_biosketches_current_pending_sup": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302306Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Assemble biosketches, current/pending support forms, and all key personnel documentation.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302307Z"
+    },
+    "goal.subgoal.init.compile_the_complete_application_package": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302603Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.compile_the_complete_application_package",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Compile the complete application package, complete eRA Commons/grants.gov forms, and submit the proposal by February 15, 2026.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302604Z"
+    },
+    "goal.subgoal.init.conduct_internal_review_against_the_nimh": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302542Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Conduct internal review against the NIMH checklist, revise documents, and bring each component to submission-ready quality.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302544Z"
+    },
+    "goal.subgoal.init.develop_and_complete_the_research_strate": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302161Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Develop and complete the Research Strategy (Significance, Innovation, Approach) and integrate preliminary data.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302162Z"
+    },
+    "goal.subgoal.init.draft_and_finalize_the_specific_aims_and": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.301758Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Draft and finalize the Specific Aims and project abstracts (including lay summary).",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.301768Z"
+    },
+    "goal.subgoal.init.obtain_and_finalize_letters_of_support_i": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302459Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Obtain and finalize letters of support, institutional commitment letters, and collaborator/consultant confirmations.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302460Z"
+    },
+    "goal.subgoal.init.prepare_human_subjects_irb_materials_dat": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302405Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Prepare human subjects/IRB materials, data management and sharing plan, and other compliance/safety documentation.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302407Z"
+    },
+    "goal.subgoal.init.prepare_the_budget_detailed_budget_justi": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302227Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Prepare the budget, detailed budget justification, and institutional facilities/resources documentation.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302242Z"
+    },
+    "goal.v1": {
+      "confidence": 0.4,
+      "created_at": "2026-01-13T21:24:46.224696Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [
+            "Which specific NIMH funding announcement or activity code (e.g., R01, R21, K-series, PA/FOA number) are you targeting?",
+            "What is the central research topic and proposed specific aims (even draft statements) for the application?",
+            "Who will be the PI and who are the key collaborators or co-investigators?",
+            "Do you have a current draft of any sections (specific aims, research strategy, budget, preliminary data)? If so, which?",
+            "What is the anticipated total budget or institutional cap, and are there constraints on personnel or indirect costs?",
+            "Will the project involve human subjects, vertebrate animals, or other regulated materials requiring IRB/IACUC/IBC approvals? If so, what is the current approval status?",
+            "Do you have institutional support letters and departmental approvals available or contacts to obtain them?",
+            "What is your timeline and available bandwidth for drafting, revising, and internal review prior to submission?",
+            "Are there required templates, formatting constraints, or submission portals (e.g., Grants.gov/eRA Commons) you already use or need help with?",
+            "Do you have preliminary data, datasets, or code that must be summarized or archived (data management plan)?",
+            "Who will handle budget preparation and institutional routing/submission processes?",
+            "Are there specific reviewers, themes, or NIMH priority areas you want the application to emphasize?"
+          ],
+          "metric": {
+            "method": "Count required proposal components (e.g., specific aims, research strategy, budget and justification, biosketches, human subjects/IRB documentation, data management plan, letters of support, abstracts) and calculate the percentage that are finalized to submission-ready quality according to an NIMH checklist.",
+            "name": "Proposal completion percentage",
+            "unit": "%"
+          },
+          "rationale": "Securing NIMH funding will enable the proposed mental health research, support personnel and resources, and advance scientific understanding and interventions in a prioritized area of need."
+        },
+        "tasks": []
+      },
+      "id": "goal.v1",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "accepted",
+      "text": "Draft a complete grant proposal to the National Institute of Mental Health for submission by February 15, 2026.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:24:54.302761Z"
+    }
+  },
+  "revisions": [
+    {
+      "detail": {
+        "id": "goal.v1",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:46.224729Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.301779Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302095Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302169Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302187Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302247Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302261Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302312Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302325Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302412Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302425Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302464Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302492Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302549Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302561Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.compile_the_complete_application_package",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302608Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.compile_the_complete_application_package",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302623Z"
+    }
+  ]
+}

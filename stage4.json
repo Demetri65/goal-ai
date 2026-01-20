@@ -1,0 +1,1282 @@
+{
+  "edges": [
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.init.compile_the_complete_application_package",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.collect_baseline",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.identify_constraints",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.subgoal.find_resources",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "src": "goal.subgoal.init.compile_the_complete_application_package",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.plan.option1",
+      "type": "subgoal_of"
+    },
+    {
+      "dst": "goal.v1",
+      "src": "goal.plan.option2",
+      "type": "subgoal_of"
+    }
+  ],
+  "gates": [
+    {
+      "approved_at": "2026-01-13T21:24:54.302813Z",
+      "note": "interactive ok",
+      "stage": 1,
+      "status": "approved"
+    },
+    {
+      "approved_at": "2026-01-13T21:31:55.399103Z",
+      "note": "baseline ok",
+      "stage": 2,
+      "status": "approved"
+    },
+    {
+      "approved_at": "2026-01-13T21:33:13.794046Z",
+      "note": "plan chosen",
+      "stage": 3,
+      "status": "approved"
+    },
+    {
+      "note": "",
+      "stage": 4,
+      "status": "pending"
+    }
+  ],
+  "meta": {
+    "intent": "help me draft a proposal to national institute of mental health due by febuary 15 2026",
+    "rationale": "Securing NIMH funding will enable the proposed mental health research, support personnel and resources, and advance scientific understanding and interventions in a prioritized area of need.",
+    "refined_with_baseline": true,
+    "root_goal_id": "goal.v1"
+  },
+  "nodes": {
+    "goal.plan.option1": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:32:27.532578Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "last_updated": "2026-01-13T21:33:42.909497+00:00",
+          "reasons": [
+            "baseline_coverage=1.00",
+            "implementation_intentions=1.00",
+            "time_bound_present=1.00",
+            "step_granularity=0.83"
+          ],
+          "rubric": {
+            "baseline_coverage": 1.0,
+            "implementation_intentions": 1.0,
+            "notes": "Prototype heuristic rubric. Replace with explicit LLM-judge rubric later.",
+            "step_granularity": 0.8333333333333334,
+            "time_bound_present": 1.0
+          },
+          "score": 0.9750000000000001
+        },
+        "plan": {
+          "assumptions": [
+            "PI can commit an average of 10 hours per week to this project between Jan 13 and submission.",
+            "Internal institutional routing deadline of Feb 8, 2026 is firm and must be met to allow institutional submission by Feb 15 external deadline.",
+            "Target FOA is a standard NIMH R01 (assume Typical limits: Specific Aims = 1 page; Research Strategy = 12 pages; budget and modular limits per FOA\u2014PI will confirm FOA-specific limits immediately).",
+            "Grants manager will prepare the formal institutional budget, budget justification, and complete institutional forms; PI responsible for reviewing and approving them in a timely fashion.",
+            "IRB is pending and human-subjects are expected; IRB approval may not be obtained before internal routing; plan to submit with IRB pending if necessary while documenting status and mitigation.",
+            "Preliminary data exist but require preparation/figures; full new data collection is not required before submission, but key analyses/figures must be produced within weeks 2\u20133.",
+            "No proposal components have been started; collaborator agreements and letters are not yet in hand and must be solicited immediately.",
+            "Departmental/administrative support (e.g., for letters, institutional language, signatures) is available but may require targeted escalation for rapid turnarounds."
+          ],
+          "if_then": [
+            "If key collaborators or letter writers do not commit within 72 hours of request, then escalate: (a) send templated letter text and a clear deadline; (b) if still no response within 48 hours, identify alternate collaborators or request a short institutional letter of support from department chair to meet routing deadline.",
+            "If the IRB is not approved by the institutional routing date (Feb 6), then include a clear human-subjects plan and an IRB application/receipt in the submission package, state approval as pending in the Human Subjects section, and provide an estimated approval date and mitigation measures. Also, communicate with the program officer to confirm acceptability of pending IRB at submission.",
+            "If preliminary data cannot be finalized in time, then (a) prioritize 1\u20132 strongest figures and present additional analyses as 'preliminary/pilot' work with clear plans and timelines for completion, and (b) tighten the research scope to emphasize feasibility and rigorous study design rather than breadth.",
+            "If institutional or grants-office routing cannot be completed by Feb 8, then request an exception or earlier internal approval workflow (e.g., pre-approval of PDFs plus post-submission signatures) and document communications proving timely intent to submit. Notify the program officer if institutional processes will jeopardize timely submission.",
+            "If PI time is insufficient (10 hrs/week proves inadequate), then (a) delegate drafting of sections (methods, data management, appendices) to trained staff or a paid editor, (b) reduce the PI\u2019s drafting load to oversight and key sections (Specific Aims, Significance, Approach high-level), and (c) re-sequence tasks to focus PI hours on items reviewers weight most heavily (Aims, Approach, feasibility).",
+            "If a critical co-investigator cannot provide a required biosketch or commitment, then remove them from the budgeted key personnel or identify a replacement and document the change in the submission; inform the grants office and program officer if personnel changes occur after routing."
+          ],
+          "steps": [
+            "Week 1 (Jan 13\u2013Jan 19) \u2014 Project setup & Specific Aims (Goal: 1-page Specific Aims draft ready): Convene 60\u201390 minute kickoff (PI + grants manager + 1\u20132 core collaborators) to confirm hypothesis, aims, high-level approach, timeline, roles. Draft and finalize Specific Aims (PI). Prepare a one-page lay abstract and a 2\u20133 paragraph significance/innovation outline. Identify required letter writers and request commitments with target delivery dates. Deliverables: Specific Aims (draft then final), list of letter writers + deadlines, document of roles. (PI time target: 6\u20138 hours this week; remaining hours for coordination.)",
+            "Week 2 (Jan 20\u2013Jan 26) \u2014 Research Strategy outline, IRB push, and biosketch collection (Goal: full Research Strategy outline + biosketch drafts): Create detailed Research Strategy outline (Significance, Innovation, Approach with Aim-by-Aim experiments and contingency plans). Begin writing Approach text for Aim 1 and create figure/table plan. Submit IRB materials or follow up intensively with IRB office to request expedited review; prepare human-subjects documentation text (inclusion/exclusion, recruitment, consent). Request and collect biosketches and current & pending support from all senior personnel; provide biosketch templates and examples. Ask grant manager to start institutional budget worksheet. Deliverables: Research Strategy outline, first draft Aim 1 Approach, IRB submission or documented IRB timeline, biosketch drafts in hand. (PI time target: 10 hours total this week, focused on writing and IRB communications.)",
+            "Week 3 (Jan 27\u2013Feb 2) \u2014 Preliminary data, Figures, and Budget Draft (Goal: solid prelim-data figures; first full draft of Aims + Approach): Assemble and finalize preliminary-data figures/tables for each aim (PI + data analyst or student). Draft Approach sections for Aim 2 and Aim 3, Methods, and Analysis plan; produce a draft Data Management Plan. Grants manager drafts institutional budget and budget justification; PI reviews. Draft human-subjects sections (recruitment, protections) and append any IRB correspondence. Circulate full one-page Specific Aims and Research Strategy (partial) to 1\u20132 internal colleagues for quick feedback. Collect signed commitments from collaborators or dated email agreements. Deliverables: preliminary-data figures, partial Research Strategy text (Aim 1\u20133 drafted), budget worksheet draft, data management plan draft, collaborator commitment emails. (PI time target: 10 hours.)",
+            "Week 4 (Feb 3\u2013Feb 9) \u2014 Complete full draft & internal routing (internal deadline Feb 8): Finalize full Research Strategy (12-page R01 limit assumed), Human Subjects/Protection sections, Biosketches, Facilities & Other Resources, Resource Sharing Plan, and letters of support collected and converted to PDFs. Assemble entire application in NIH format (PDFs and system files). Submit full package for institutional routing and internal review by Feb 6 to allow grants office processing and last-minute fixes ahead of the institutional Feb 8 routing deadline. If institutional routing requires specific forms, ensure grants manager completes them. Deliverables: Full assembled application package submitted to institutional routing/internal review by Feb 6 (no later than Feb 8 absolute). (PI time target: 10 hours concentrated on final edits and sign-offs.)",
+            "Week 5 (Feb 10\u2013Feb 16) \u2014 Address institutional review feedback & final external submission (external deadline Feb 15): Respond immediately to institutional grants office/internal reviewers\u2019 edits and sign/approve final forms. Finalize any outstanding letters or institutional assurances; upload final PDFs to eRA Commons and complete applicant entry. Target final submission at least 24 hours before Feb 15 cutoff (i.e., by Feb 14) to allow for technical problems. If eRA requires institutional submitter action, coordinate with grants manager to ensure on-time electronic submission. Deliverables: eRA Commons submission completed and confirmation saved. (PI time target: 6\u201310 hours for final reviews and coordination.)"
+          ],
+          "time_bound_weeks": 5
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.plan.option1",
+      "provenance": "llm",
+      "stage": 3,
+      "status": "proposed",
+      "text": "Plan option 1",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:33:42.909739Z"
+    },
+    "goal.plan.option2": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:32:59.765602Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "last_updated": "2026-01-13T21:33:42.909781+00:00",
+          "reasons": [
+            "baseline_coverage=1.00",
+            "implementation_intentions=1.00",
+            "time_bound_present=1.00",
+            "step_granularity=1.00"
+          ],
+          "rubric": {
+            "baseline_coverage": 1.0,
+            "implementation_intentions": 1.0,
+            "notes": "Prototype heuristic rubric. Replace with explicit LLM-judge rubric later.",
+            "step_granularity": 1.0,
+            "time_bound_present": 1.0
+          },
+          "score": 1.0
+        },
+        "plan": {
+          "assumptions": [
+            "You can consistently commit ~10 hours/week to this through Feb 8 and be available for rapid email/phone responses when collaborators or the grants office needs decisions. ",
+            "Internal institutional routing deadline (Feb 8, 2026) is firm and must be met for the application to be submitted by the external deadline. ",
+            "Your grants manager will handle institutional budget preparation, indirect cost calculations, and eRA Commons/institutional submission mechanics and will meet agreed internal deadlines. ",
+            "FOA is a standard R01 with typical limits (Specific Aims = 1 page, Research Strategy = 12 pages); confirm the FOA page/budget limits immediately and adjust if different. ",
+            "IRB is pending and can be at least submitted within Week 1; if full approval is not obtained before internal deadline, a determination/exemption or a mitigation plan will be required. ",
+            "Preliminary data exist in raw form and can be cleaned/assembled or summarized into figure placeholders within 1\u20132 weeks with focused effort or short RA support. ",
+            "You will be able to secure at least 3 committed letter writers (including one institutional letter) by Feb 2 if outreach begins immediately; have backups identified now. ",
+            "Institutional routing/signature turnaround typically requires up to 5 business days\u2014explicitly build this into the Feb 8 internal deadline."
+          ],
+          "if_then": [
+            "If IRB approval is delayed past internal deadline: request a written Institutional Review Board determination of exempt/non\u2011human\u2011subjects or reframe the proposal to use de\u2011identified/public datasets and document that plan in the application. If that still fails, explicitly state in the application that human\u2011subjects approval is pending and provide a realistic timeline backed by submitted IRB receipt. Prioritize aims that do not require active human\u2011subjects work for preliminary data. ",
+            "If key collaborators decline or cannot commit letters: have a short backup list of alternate collaborators (identify 2 now). If replacements cannot be obtained, rewrite aims to be deliverable by core personnel (reduce reliance on outside sites) and obtain strong institutional letters describing available resources and internal support. ",
+            "If preliminary data cannot be completed in time: include clear, realistic pilot-study plans and/or simulated/expected results labeled as preliminary, and emphasize feasibility via methods and analytic approach. Reduce scope of Aim 3 or convert one aim into a planned future direction to preserve space for mechanistic aims. Make the Specific Aims and Approach emphasize innovation and the research plan\u2019s rigor rather than large amounts of unpublished data. ",
+            "If letters of support are late: accept brief signed PDF/email statements initially and replace with formal letters when available; secure institutional official letters (department chair or center director) as interim support. Communicate hard deadlines and escalate politely (phone call + calendar invite) 3 days before your needed date. ",
+            "If the grants office/budgeting stalls: deliver a preliminary budget worksheet and narrative you can sign off on, and request that grants manager submit a provisional budget for routing so the application package can be assembled. Confirm who signs final budget and how to update minor budget elements post-submission if needed. ",
+            "If you cannot meet the 10 hr/week commitment some weeks: reallocate tasks to the grants manager and collaborators\u2014prioritize Specific Aims and human\u2011subjects documentation for your time; defer lower\u2011value formatting/attachment work to support staff. If unavoidable, consider delaying submission to the next NIMH cycle rather than submitting a low\u2011quality application."
+          ],
+          "notes": [
+            "Check-in: progress=0.20 | completed=goal.subgoal.init.assemble_biosketches_current_pending_sup"
+          ],
+          "steps": [
+            "Immediate (today\u2013Jan 16): Confirm scope and FOA details; create a one\u2011page project snapshot (one-sentence problem, central hypothesis, 3 aims, impact) to use when recruiting collaborators and letter writers. Create an NIMH/R01 checklist (specific aims 1p, research strategy 12p, budget, human subjects, DMP, biosketches, etc.). Book recurring twice-weekly 30\u201345 min status calls for the next 4 weeks. Email your grants manager and confirm they will: prepare institutional budget, salary/effort approvals, and manage eRA Commons routing; confirm their internal deadlines and turnaround times. Identify 6\u20138 potential letter writers/collaborators today and send a short recruit message with a 1\u20132 sentence ask and hard delivery date (see deadlines below).",
+            "Week 1 (Jan 13\u2013Jan 19) \u2014 Produce Specific Aims and team buy\u2011in: Draft and finalize Specific Aims (1 page) by Jan 19. Deliverable: Specific Aims ready for immediate circulation. Allocate your 10 hours to: 6 hours writing aims and 4 hours contacting collaborators and confirming letters of support and roles. Submit IRB application or at minimum a Human Subjects Determination request by Jan 20; if you can\u2019t complete a full IRB packet, submit a formal query for exemption/non-human-subjects determination to get a ruling. Grants manager begins budget template and confirms indirect rate and salary caps.",
+            "Week 2 (Jan 20\u2013Jan 26) \u2014 Build Research Strategy skeleton and preliminary data: Complete a detailed outline for Research Strategy (Significance, Innovation, Approach with Aim\u2011by\u2011Aim experiments, preliminary data figures list) by Jan 24. Draft preliminary data figures and legends or produce a Results summary/placeholder if full analyses aren\u2019t finished. Start Methods/Approach text for Aim 1 and Aim 2. Produce a first draft of the Human Subjects/Protections and Data Management Plan by Jan 26. Get at least 2 collaborators to commit to letters (emails confirming commitment). Your 10 hours: 6 hours drafting Research Strategy text + methods and preliminary data polishing; 4 hours follow up with collaborators and grants manager.",
+            "Week 3 (Jan 27\u2013Feb 2) \u2014 Full draft and internal review prep: Convert outlines into full Research Strategy text and assemble all sections (Specific Aims, Research Strategy, Human Subjects, DMP, Vertebrate Animals if applicable). Collect biosketches and current & pending support from key personnel; generate Facilities & Other Resources and Equipment pages. Finalize draft budget with grants manager and get institutional budget justification ready. Circulate full draft to 2\u20133 internal reviewers (mentor, departmental reviewer, or external colleague) by Jan 30 for a rapid read and return by Feb 2. Secure signed or promised letters of support (at least placeholder emails) from remaining letter writers by Feb 2. Your 10 hours: 7 hours writing/revising; 3 hours coordinating reviewers and letters.",
+            "Week 4 (Feb 3\u2013Feb 8) \u2014 Incorporate feedback, finalize package, institutional routing: Incorporate reviewers\u2019 edits and finalize all attachments. Assemble the full upload package in the institutional routing format required; obtain required institutional sign-offs and signatures. Deliver the completed package to your institution\u2019s submission office by the internal deadline (Feb 8). Reserve the rest of this week for final QA: format checks, PDF generation, and final compliance checks against FOA. Your 10 hours: 6\u20137 hours for final edits and coordination; remaining hours for QA and follow-up with grants manager.",
+            "Post-internal deadline buffer (Feb 9\u2013Feb 15) \u2014 Final submission oversight and last\u2011minute NIH submission: Use this week only for responding to institutional queries, finalizing any last-minute documents, and transmitting the application to NIH (or authorizing the institutional submissions office to do so). If institutional routing finishes early, confirm eRA Commons submission window and remain on call to resolve submission errors. "
+          ],
+          "time_bound_weeks": 6
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.plan.option2",
+      "provenance": "llm",
+      "stage": 3,
+      "status": "accepted",
+      "text": "Plan option 2",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:33:42.909801Z"
+    },
+    "goal.subgoal.collect_baseline": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:25:10.083017Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.collect_baseline",
+      "provenance": "llm",
+      "stage": 2,
+      "status": "proposed",
+      "text": "Collect baseline answers",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:25:10.083112Z"
+    },
+    "goal.subgoal.find_resources": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:25:10.083481Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.find_resources",
+      "provenance": "llm",
+      "stage": 2,
+      "status": "proposed",
+      "text": "Find resources",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:25:10.083481Z"
+    },
+    "goal.subgoal.identify_constraints": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:25:10.083448Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": []
+      },
+      "id": "goal.subgoal.identify_constraints",
+      "provenance": "llm",
+      "stage": 2,
+      "status": "proposed",
+      "text": "Identify constraints",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:25:10.083449Z"
+    },
+    "goal.subgoal.init.assemble_biosketches_current_pending_sup": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302306Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Gather names of all key personnel and confirm roles/effort for the proposal.",
+          "Request NIH biosketch templates and current/pending support forms from each contributor.",
+          "Review returned biosketches for format, accuracy, and completeness; request corrections as needed.",
+          "Collect institutional signatures or confirmations if required and compile into a single personnel folder.",
+          "Create a master checklist tracking which biosketches/current-pending forms are submission-ready."
+        ]
+      },
+      "id": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "accepted",
+      "text": "Assemble NIH-format biosketches, current and pending support forms, and required documentation for all key personnel and senior/key staff.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:33:42.900427Z"
+    },
+    "goal.subgoal.init.compile_the_complete_application_package": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302603Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Populate eRA Commons and Grants.gov forms with accurate project and personnel information.",
+          "Upload finalized documents (Specific Aims, Research Strategy, biosketches, budget justification, DMSP, IRB documentation, letters) into the submission portal.",
+          "Run final format/attachment checks per FOA instructions and resolve any errors flagged by the submission system.",
+          "Obtain final institutional approvals/signatures required for submission and confirm submitter credentials in eRA Commons.",
+          "Submit the application to NIMH by the external submission deadline (February 15, 2026) and archive confirmation receipts."
+        ]
+      },
+      "id": "goal.subgoal.init.compile_the_complete_application_package",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Compile the complete application package, complete eRA Commons / Grants.gov forms, and submit the proposal to NIMH by the external deadline.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396121Z"
+    },
+    "goal.subgoal.init.conduct_internal_review_against_the_nimh": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302542Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Assemble a complete draft application and run it against the NIMH/FOA checklist to identify gaps.",
+          "Schedule an internal review meeting with co-investigators and institutional reviewers to gather feedback.",
+          "Assign revision tasks based on reviewer comments and implement changes to each component.",
+          "Confirm that IRB, budget, biosketches, letters, and research documents meet institutional requirements for routing.",
+          "Prepare a final package for institutional sign-off by the internal deadline (Feb 8) and for external submission."
+        ]
+      },
+      "id": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Conduct internal reviews against an NIMH/FOA checklist, iterate revisions, and bring each component to submission-ready quality for institutional routing.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396111Z"
+    },
+    "goal.subgoal.init.develop_and_complete_the_research_strate": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302161Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Create a section outline mapping Significance, Innovation, and Approach to the Specific Aims.",
+          "Assign writing tasks for each subsection among designated writers and set internal checkpoints.",
+          "Prepare and integrate available preliminary data figures/tables and annotate methods/analyses needing completion.",
+          "Draft analytic plans, power/feasibility rationale, and contingency approaches for anticipated challenges.",
+          "Revise the Research Strategy to ensure alignment with the Specific Aims and FOA requirements."
+        ]
+      },
+      "id": "goal.subgoal.init.develop_and_complete_the_research_strate",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Develop and complete the Research Strategy (Significance, Innovation, Approach), integrating preliminary data and analytic plans.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396024Z"
+    },
+    "goal.subgoal.init.draft_and_finalize_the_specific_aims_and": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.301758Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Draft a one-page Specific Aims document outlining objectives, hypotheses, and expected impact.",
+          "Write a concise scientific abstract and a plain-language lay summary for public use.",
+          "Circulate drafts to co-investigators for feedback and incorporate revisions.",
+          "Confirm that aims and abstracts conform to FOA page/format limits and update as needed.",
+          "Approve a submission-ready version to feed into the Research Strategy and application package."
+        ]
+      },
+      "id": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Draft and finalize the Specific Aims page, project abstracts, and a lay summary suitable for the NIMH FOA.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.395994Z"
+    },
+    "goal.subgoal.init.obtain_and_finalize_letters_of_support_i": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302459Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "List required letter writers (collaborators, consultants, institutional officials) and confirm willingness to provide letters.",
+          "Provide letter writers with a one-page brief, draft text suggestions, and any FOA-specific language to include.",
+          "Set and communicate expected delivery dates (to align with institutional routing/internal review).",
+          "Collect letters, review them for required content and signatures, and request revisions if missing elements.",
+          "Store finalized letters in the application folder in the required format for upload."
+        ]
+      },
+      "id": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Identify, request, and finalize letters of support, institutional commitment letters, and collaborator/consultant confirmations.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396078Z"
+    },
+    "goal.subgoal.init.prepare_human_subjects_irb_materials_dat": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302405Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Draft IRB protocol narrative, recruitment materials, consent forms, and participant-facing documents based on the Research Strategy.",
+          "Complete the Data Management and Sharing Plan (DMSP) consistent with NIH/DMSP guidance.",
+          "Identify anticipated human-subjects risk level and document protections for privacy/confidentiality.",
+          "Confirm IRB application status (pending) and prepare any supporting appendices or referenced study materials.",
+          "Coordinate with institutional research compliance office to determine submission steps and required sign-offs."
+        ]
+      },
+      "id": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Prepare human subjects documentation, IRB application materials, data management and sharing plan, and other required compliance documentation.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396051Z"
+    },
+    "goal.subgoal.init.prepare_the_budget_detailed_budget_justi": {
+      "confidence": 0.5,
+      "created_at": "2026-01-13T21:24:54.302227Z",
+      "data": {
+        "baseline": {},
+        "constraints": [],
+        "decision": {
+          "plan_options": []
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [],
+        "smr": {
+          "forcing_questions": [],
+          "metric": {
+            "method": "",
+            "name": "",
+            "unit": ""
+          },
+          "rationale": ""
+        },
+        "tasks": [
+          "Provide the grants/budget manager (grand manager) with required inputs: proposed personnel effort, key cost items, and any subcontract details.",
+          "Collect institutional F&A/indirect cost rates, salary ceilings, and other rate agreements needed for the budget.",
+          "Draft a detailed budget justification describing personnel effort, other direct costs, and rationale for major items.",
+          "Obtain institutional facilities and resources statements (e.g., core facilities, lab space) for the application.",
+          "Review the completed budget for consistency with effort listed on biosketches and with the FOA budget limits."
+        ]
+      },
+      "id": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "proposed",
+      "text": "Prepare the budget, detailed budget justification, and institutional facilities/resources documentation in coordination with the institutional grants/budget manager.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:31:55.396101Z"
+    },
+    "goal.v1": {
+      "confidence": 0.4,
+      "created_at": "2026-01-13T21:24:46.224696Z",
+      "data": {
+        "baseline": {
+          "extra.1": {
+            "question": "Which NIMH funding mechanism and FOA are you targeting (e.g., R01, R21, K-series, specific PA/RFA)? Provide FOA number and any page or budget limits.",
+            "unit": "",
+            "value": "R01"
+          },
+          "extra.2": {
+            "question": "Which proposal components are already complete and which are missing? (List specific aims, research strategy, budget & justification, biosketches, human subjects/IRB documents, data management plan, letters of support, abstract/summary).",
+            "unit": "",
+            "value": "nothing has been started yet"
+          },
+          "extra.3": {
+            "question": "Do you expect human-subjects or protected-data issues (PHI, HIPAA)? If yes, is an IRB application already submitted and what is the expected approval timeline?",
+            "unit": "",
+            "value": "expect human subjects but no protected data issues. irb is pending"
+          },
+          "extra.4": {
+            "question": "What is the status of preliminary data and analytic code? Are datasets available and documented, or do you need time to collect/clean data?",
+            "unit": "",
+            "value": "need to prepare prelim data"
+          },
+          "extra.5": {
+            "question": "Who will write/submit the budget and institutional budget justification? Are institutional rate agreements and salary/effort approvals available?",
+            "unit": "",
+            "value": "my grand manager will deal with all of this"
+          },
+          "extra.6": {
+            "question": "How many letter writers / collaborators must provide signed letters of support, and have they agreed to deliver by specified dates? Provide names and expected delivery dates if known.",
+            "unit": "",
+            "value": "need to identifu the writers and convince collaborators"
+          },
+          "hard_deadline": {
+            "question": "Is the external NIH/NIMH submission deadline February 15, 2026 absolute for this application? List any earlier internal institutional deadlines (e.g., departmental sign-off, grants office routing, eRA Commons approvals) and their dates. If any parts must be finished earlier than Feb 15 (e.g., letters of support, institutional approvals), specify dates.",
+            "unit": "date",
+            "value": "febuary 8 is the internal deadline"
+          },
+          "key_constraints": {
+            "question": "What key constraints could prevent meeting the deadline? For each constraint below, state current status and an estimated completion date: IRB/IACUC approvals or human-subjects documentation; availability of co-investigators/collaborators and letter writers; institutional routing/signature requirements; budget ceiling or sponsor-imposed limits and indirect cost rate; page limits or format restrictions; access to preliminary data, datasets, core facilities; competing responsibilities (teaching/clinical duties) that reduce your available hours.",
+            "unit": "text",
+            "value": "availability of co investigators, access to preliminary data"
+          },
+          "time_per_week_hours": {
+            "question": "How many hours per week can you personally commit, on average, to drafting and coordinating this NIMH proposal between now and submission? Please give a single number (e.g., 5, 10, 20).",
+            "unit": "hours/week",
+            "value": 10
+          }
+        },
+        "constraints": [
+          {
+            "id": "constraint.time_budget",
+            "source": "baseline.time_per_week_hours",
+            "text": "Time budget constraint"
+          },
+          {
+            "id": "constraint.hard_deadline",
+            "source": "baseline.hard_deadline",
+            "text": "Hard deadline constraint"
+          },
+          {
+            "id": "constraint.key_constraints",
+            "source": "baseline.key_constraints",
+            "text": "Key constraints"
+          }
+        ],
+        "decision": {
+          "chosen_plan_id": "goal.plan.option2",
+          "plan_options": [
+            "goal.plan.option1",
+            "goal.plan.option2"
+          ]
+        },
+        "eval": {
+          "reasons": []
+        },
+        "plan": {
+          "if_then": [],
+          "steps": []
+        },
+        "resources": [],
+        "review_prompts": [],
+        "risks": [
+          "Overcommitment (plan doesn't fit weekly time budget)",
+          "Missing baseline data (fantasy deadlines)",
+          "Context shifts (schedule changes, priorities change)"
+        ],
+        "smr": {
+          "forcing_questions": [
+            "Which specific NIMH funding announcement or activity code (e.g., R01, R21, K-series, PA/FOA number) are you targeting?",
+            "What is the central research topic and proposed specific aims (even draft statements) for the application?",
+            "Who will be the PI and who are the key collaborators or co-investigators?",
+            "Do you have a current draft of any sections (specific aims, research strategy, budget, preliminary data)? If so, which?",
+            "What is the anticipated total budget or institutional cap, and are there constraints on personnel or indirect costs?",
+            "Will the project involve human subjects, vertebrate animals, or other regulated materials requiring IRB/IACUC/IBC approvals? If so, what is the current approval status?",
+            "Do you have institutional support letters and departmental approvals available or contacts to obtain them?",
+            "What is your timeline and available bandwidth for drafting, revising, and internal review prior to submission?",
+            "Are there required templates, formatting constraints, or submission portals (e.g., Grants.gov/eRA Commons) you already use or need help with?",
+            "Do you have preliminary data, datasets, or code that must be summarized or archived (data management plan)?",
+            "Who will handle budget preparation and institutional routing/submission processes?",
+            "Are there specific reviewers, themes, or NIMH priority areas you want the application to emphasize?"
+          ],
+          "metric": {
+            "method": "Count required proposal components (e.g., specific aims, research strategy, budget and justification, biosketches, human subjects/IRB documentation, data management plan, letters of support, abstracts) and calculate the percentage that are finalized to submission-ready quality according to an NIMH checklist.",
+            "name": "Proposal completion percentage",
+            "unit": "%"
+          },
+          "rationale": "Securing NIMH funding will enable the proposed mental health research, support personnel and resources, and advance scientific understanding and interventions in a prioritized area of need."
+        },
+        "tasks": []
+      },
+      "id": "goal.v1",
+      "provenance": "llm",
+      "stage": 1,
+      "status": "accepted",
+      "text": "Draft a complete grant proposal to the National Institute of Mental Health for external submission by February 15, 2026, and ready the full application package for institutional routing and internal review prior to that date.",
+      "type": "goal",
+      "updated_at": "2026-01-13T21:33:13.793791Z"
+    }
+  },
+  "revisions": [
+    {
+      "detail": {
+        "id": "goal.v1",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:46.224729Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.301779Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302095Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302169Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302187Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302247Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302261Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302312Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302325Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302412Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302425Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302464Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302492Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302549Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302561Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.init.compile_the_complete_application_package",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:24:54.302608Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.init.compile_the_complete_application_package",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:24:54.302623Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.collect_baseline",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:25:10.083136Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.collect_baseline",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:25:10.083398Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.identify_constraints",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:25:10.083453Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.identify_constraints",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:25:10.083465Z"
+    },
+    {
+      "detail": {
+        "id": "goal.subgoal.find_resources",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:25:10.083484Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.subgoal.find_resources",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:25:10.083492Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "src": "goal.subgoal.init.compile_the_complete_application_package",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398923Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398949Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398958Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398966Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398974Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398982Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "src": "goal.subgoal.init.conduct_internal_review_against_the_nimh",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.398991Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.draft_and_finalize_the_specific_aims_and",
+        "src": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.399005Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "src": "goal.subgoal.init.obtain_and_finalize_letters_of_support_i",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.399013Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.develop_and_complete_the_research_strate",
+        "src": "goal.subgoal.init.prepare_human_subjects_irb_materials_dat",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.399021Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.subgoal.init.assemble_biosketches_current_pending_sup",
+        "src": "goal.subgoal.init.prepare_the_budget_detailed_budget_justi",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:31:55.399029Z"
+    },
+    {
+      "detail": {
+        "goal_id": "goal.v1"
+      },
+      "kind": "refine_after_baseline",
+      "ts": "2026-01-13T21:31:55.399041Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option1",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:32:27.533027Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.plan.option1",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:32:27.535074Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option2",
+        "type": "goal"
+      },
+      "kind": "add_node",
+      "ts": "2026-01-13T21:32:59.766235Z"
+    },
+    {
+      "detail": {
+        "dst": "goal.v1",
+        "src": "goal.plan.option2",
+        "type": "subgoal_of"
+      },
+      "kind": "add_edge",
+      "ts": "2026-01-13T21:32:59.767817Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option1",
+        "score": 0.9750000000000001
+      },
+      "kind": "score_plan",
+      "ts": "2026-01-13T21:32:59.768355Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option2",
+        "score": 1.0
+      },
+      "kind": "score_plan",
+      "ts": "2026-01-13T21:32:59.768378Z"
+    },
+    {
+      "detail": {
+        "completed_goals": [
+          "goal.subgoal.init.assemble_biosketches_current_pending_sup"
+        ],
+        "friction": "",
+        "missed_goals": [],
+        "progress": 0.2,
+        "reflection": ""
+      },
+      "kind": "checkin",
+      "ts": "2026-01-13T21:33:42.904084Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option1",
+        "score": 0.9750000000000001
+      },
+      "kind": "score_plan",
+      "ts": "2026-01-13T21:33:42.909750Z"
+    },
+    {
+      "detail": {
+        "id": "goal.plan.option2",
+        "score": 1.0
+      },
+      "kind": "score_plan",
+      "ts": "2026-01-13T21:33:42.909805Z"
+    }
+  ]
+}
