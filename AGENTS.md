@@ -1,4 +1,4 @@
-# SMART-GoT prototype: Codex working agreements
+# Prototype: Codex working agreements
 
 This repository is a **research prototype scaffold**. Optimize for **clarity** and **small diffs**.
 
@@ -11,7 +11,7 @@ This repository is a **research prototype scaffold**. Optimize for **clarity** a
 - After changes, run:
   - `python -m pytest -q`
   - and (if you modify CLI behavior) run a quick smoke command like:
-    - `smartgot stage1 --intent "test" --out /tmp/g.json`
+    - `smartgot run --goal "test"`
 
 ## Output expectations
 - When fixing an issue, include:

@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "smart-got"
 version = "0.0.1"
-description = "SMART-GoT prototype scaffold: staged SMART goals with an adaptive goal graph backend"
+description = "SMART-GoT lean prototype: interactive SMART workstream graph"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -18,12 +18,9 @@ dependencies = [
 dev = [
   "pytest>=8.0",
 ]
-llm = [
-  "openai>=1.0.0",
-]
 
 [project.scripts]
-smartgot = "smart_got.run_cli:main"
+smartgot = "smart_got.cli:main"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

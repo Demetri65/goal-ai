@@ -1,9 +1,8 @@
 # AGENTS.override.md
 
-This rewrite overrides existing guidance.
+This override aligns guidance with the lean interactive workflow.
 
-- Delete legacy code; this is a clean rewrite.
-- Keep the codebase minimal: only models + store + engine + llm + cli.
-- Use Pydantic v2 for schemas.
-- Use OpenAI Responses API structured outputs for LLM calls, with a Mock provider fallback.
+- Primary command: `smartgot run --goal "..."` (interactive).
+- Baseline is interactive Q&A (root + parent + current node).
+- Keep modules minimal: models/store/engine/llm/cli/prompts only.
 - Validate changes with `python -m pytest -q` and `smartgot --help`.
