@@ -1,0 +1,1107 @@
+{
+  "active_layer": 1,
+  "created_at": "2026-02-11T17:51:55.904492+00:00",
+  "focus_parent_id": "root",
+  "nodes": {
+    "n1": {
+      "baseline": {
+        "assumptions": [
+          "The knowledge gap on required governmental forms can be closed in time via research or consulting experts.",
+          "No unexpected legal, organizational, or external constraints will emerge."
+        ],
+        "baseline_notes": [
+          "There is a knowledge gap about necessary governmental forms.",
+          "Sufficient people and budget are available to complete this workstream.",
+          "The deadline to finalize scope and success criteria aligns with the overall event (1 year from start).",
+          "Progress will be tracked weekly."
+        ],
+        "constraints": [
+          "None identified at this stage."
+        ],
+        "qa": [
+          {
+            "answer": "I dont know what governmental forms need to be completed",
+            "category": "achievable",
+            "id": "achievable-1",
+            "question": "What specific skills, expertise, or knowledge gaps must be addressed to define a clear scope and measurable success criteria for the 10k charity run?"
+          },
+          {
+            "answer": "people and budget are available",
+            "category": "resources",
+            "id": "resources-1",
+            "question": "What resources (people, budget, tools from the 200 volunteers or others) are directly available for developing and validating the scope and success criteria for the 10k charity run?"
+          },
+          {
+            "answer": "I need this to be done in 1 year",
+            "category": "time_bound",
+            "id": "time_bound-1",
+            "question": "What is the hard deadline for finalizing the scope and success criteria so that the overall 'Plan a 10k charity run' timeline is not delayed?"
+          },
+          {
+            "answer": "weekly",
+            "category": "time_bound",
+            "id": "time_bound-2",
+            "question": "What milestone cadence (e.g., weekly or monthly reviews) will you use to track progress on defining and agreeing on success criteria for the charity run?"
+          },
+          {
+            "answer": "no",
+            "category": "constraints",
+            "id": "constraints-1",
+            "question": "Are there any organizational, legal, or external constraints that could impact how you define 'success' or set boundaries for the 10k charity run scope?"
+          },
+          {
+            "answer": "n/a",
+            "category": "unknowns",
+            "id": "unknowns-1",
+            "question": "What are the main areas of uncertainty or unknowns in scoping and defining acceptance criteria for the charity run that could risk alignment with the overall plan?"
+          }
+        ],
+        "unknowns": [
+          "Uncertainty around which governmental forms must be completed."
+        ]
+      },
+      "children_ids": [],
+      "id": "n1",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All necessary regulatory requirements, stakeholder objectives, and measurable acceptance criteria are documented, agreed, and signed off.",
+            "due": "2024-08-02",
+            "title": "Initial Scope and Success Criteria Finalized"
+          },
+          {
+            "description": "Weekly reviews ensure alignment between project actions, documented scope, and evolving requirements over the 1-year delivery window.",
+            "due": "2025-06-01",
+            "title": "Ongoing Scope Alignment Maintained"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Research, identify, and document all governmental and regulatory forms, permits, and approvals required for hosting a 10k charity run in the target location.",
+            "due": "2024-07-01",
+            "estimate_hours": 15.0,
+            "relative_timing": "Weeks 1-2",
+            "success_criteria": "Comprehensive list of required forms and approvals, confirmed with government sources, ready for reference in planning.",
+            "title": "Identify and Review Governmental Requirements for 10k Events"
+          },
+          {
+            "depends_on": [],
+            "description": "Consult with primary stakeholders (organizers, sponsors, volunteers, beneficiaries) to confirm the principal objectives and non-negotiables for the 10k event.",
+            "due": "2024-07-12",
+            "estimate_hours": 10.0,
+            "relative_timing": "Weeks 2-3",
+            "success_criteria": "Consensus document outlining event objectives and basic requirements signed off by all key stakeholders.",
+            "title": "Engage Stakeholders to Define Event Objectives"
+          },
+          {
+            "depends_on": [
+              "Identify and Review Governmental Requirements for 10k Events",
+              "Engage Stakeholders to Define Event Objectives"
+            ],
+            "description": "Construct an initial written outline detailing in-scope and out-of-scope elements (e.g., course distance, location, participant limits, amenities).",
+            "due": "2024-07-19",
+            "estimate_hours": 8.0,
+            "relative_timing": "Weeks 3-4",
+            "success_criteria": "Draft scope statement reviewed by project lead; feedback solicited.",
+            "title": "Draft Initial Scope Statement for the 10k Charity Run"
+          },
+          {
+            "depends_on": [
+              "Draft Initial Scope Statement for the 10k Charity Run"
+            ],
+            "description": "List and gain agreement on key metrics and acceptance criteria (e.g., minimum fundraising goal, registration numbers, participant satisfaction, regulatory compliance).",
+            "due": "2024-07-26",
+            "estimate_hours": 6.0,
+            "relative_timing": "Weeks 4-5",
+            "success_criteria": "Success criteria documented, agreed by all key stakeholders, and included in final project docs.",
+            "title": "Define and Document Measurable Success Criteria"
+          },
+          {
+            "depends_on": [
+              "Draft Initial Scope Statement for the 10k Charity Run"
+            ],
+            "description": "Hold regular meetings with the project team to review progress against initial scope and success criteria, updating planning documents as necessary.",
+            "due": "TBD",
+            "estimate_hours": 40.0,
+            "relative_timing": "Weekly throughout the year",
+            "success_criteria": "Meeting records maintained, scope changes tracked, and progress aligns with timeline.",
+            "title": "Conduct Weekly Scope Alignment Review Meetings"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "There is a knowledge gap regarding governmental forms that must be completed before finalizing scope and criteria. However, sufficient people and budget resources are available to mitigate this if the gap is addressed timely.",
+        "measurable": "Define acceptance criteria for this workstream",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Scope & Success Criteria for Plan a 10k charity run",
+        "time_bound": "Scope and success criteria must be finalized within 1 year, with weekly progress reviews to ensure ongoing alignment and timely delivery."
+      },
+      "status": "PLANNED",
+      "title": "Scope & Success Criteria",
+      "workstream": "Scope"
+    },
+    "n2": {
+      "baseline": {
+        "assumptions": [
+          "Volunteers will generally remain available throughout the planning and event period, given no additional information."
+        ],
+        "baseline_notes": [
+          "Resource allocation planning is still in the preliminary stage. Volunteer numbers are confirmed but deployment is not.",
+          "Budget status is undetermined; no commitment yet on whether it covers all needs.",
+          "Experience gap with government agencies poses a risk to resource allocation success."
+        ],
+        "constraints": [
+          "Unclear volunteer allocation per activity.",
+          "Unknown budget sufficiency.",
+          "Lack of experience with government agencies."
+        ],
+        "qa": [
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "1",
+            "question": "What allocation of your 200 available volunteers will you assign to the key activities leading up to the 10k charity run (e.g., registration, logistics, promotion, race day operations)?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "2",
+            "question": "Are there any skill or experience gaps among the volunteers that could limit successful resource allocation for planning the 10k charity run? If so, how will you address them?"
+          },
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "3",
+            "question": "What budget has been allocated for resource-related expenses (including supplies, equipment, and training) for the 10k charity run, and does it cover all anticipated needs?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "4",
+            "question": "What is the planned timeline for finalizing resource allocation decisions for the charity run, and how will you ensure decisions are made in time to meet the 1-year event deadline?"
+          },
+          {
+            "answer": "",
+            "category": "assumptions",
+            "id": "5",
+            "question": "What assumptions are you making about volunteer availability and retention throughout the resource allocation process for the charity run?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "6",
+            "question": "What constraints or risks specific to resource allocation could impact your ability to stay on schedule for the 10k charity run (e.g., volunteer drop-out, funding shortfalls, equipment delays)?"
+          }
+        ],
+        "unknowns": [
+          "Exact allocation of volunteers to activities is undecided.",
+          "Budget coverage is not confirmed.",
+          "Potential volunteer availability fluctuations."
+        ]
+      },
+      "children_ids": [],
+      "id": "n2",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All resource allocation decisions (staffing, budget, tooling) are confirmed and documented within 1 year of project start, supporting execution of the 10k charity run.",
+            "due": "12 months from project start",
+            "title": "Resource Allocation Milestone: Final Plan Approval"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Meet with event organizers and key stakeholders to determine volunteer roles, number needed per role, and any specialized requirements for staffing.",
+            "due": "TBD",
+            "estimate_hours": 8.0,
+            "relative_timing": "Month 1",
+            "success_criteria": "Document listing all roles, number of volunteers required per role, and skill/experience needs completed and approved by organizing committee.",
+            "title": "Gather Detailed Staffing Requirements"
+          },
+          {
+            "depends_on": [],
+            "description": "Develop a budget draft covering all known event needs (permits, supplies, marketing, safety, etc.), then review and confirm available funding sources (sponsorships, fundraising, grants).",
+            "due": "TBD",
+            "estimate_hours": 10.0,
+            "relative_timing": "Month 1-2",
+            "success_criteria": "Budget worksheet with estimated and confirmed amounts per category and documented sources of funds.",
+            "title": "Assess and Confirm Budget"
+          },
+          {
+            "depends_on": [],
+            "description": "List all required tools and logistics support (registration systems, timing equipment, communication devices, signage) and confirm what resources are available in-house versus what must be procured.",
+            "due": "TBD",
+            "estimate_hours": 6.0,
+            "relative_timing": "Month 2",
+            "success_criteria": "Complete inventory of required tools, assigned owners for procurement, and quotes for items to be purchased/rented.",
+            "title": "Identify Tooling and Logistics Needs"
+          },
+          {
+            "depends_on": [
+              "Gather Detailed Staffing Requirements"
+            ],
+            "description": "Identify experienced volunteers or external advisors in dealing with city or government permitting, or arrange for training/mentorship for key volunteers to fill the expertise gap.",
+            "due": "TBD",
+            "estimate_hours": 8.0,
+            "relative_timing": "Month 2-3",
+            "success_criteria": "Secure at least one person or partnership covering government liaison experience, with documented plan for coordination.",
+            "title": "Bridge Experience Gap with Government Agencies"
+          },
+          {
+            "depends_on": [
+              "Gather Detailed Staffing Requirements",
+              "Assess and Confirm Budget",
+              "Identify Tooling and Logistics Needs",
+              "Bridge Experience Gap with Government Agencies"
+            ],
+            "description": "Integrate information from staffing, budget, and tooling assessments into a finalized resource allocation plan. Assign roles, confirm budget lines, and secure tooling commitments.",
+            "due": "TBD",
+            "estimate_hours": 6.0,
+            "relative_timing": "Month 3",
+            "success_criteria": "Resource allocation plan signed off by organizing committee and accessible to all stakeholders.",
+            "title": "Finalize Resource Allocation Plan"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "Volunteer support is available (200 people), but there is a gap in experience with government agencies. Actual allocation among activities and confirmed budget status remain undetermined. Success will depend on bridging experience gaps and confirming detailed allocations and funding.",
+        "measurable": "Confirm staffing, budget, and tooling coverage",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Resource Allocation for Plan a 10k charity run",
+        "time_bound": "Resource allocation decisions must be finalized within 1 year from now, in alignment with the overall event deadline."
+      },
+      "status": "PLANNED",
+      "title": "Resource Allocation",
+      "workstream": "Resources"
+    },
+    "n3": {
+      "baseline": {
+        "assumptions": [
+          "Support and/or training for government engagement can be secured if needed.",
+          "The 1-year total timeline is a hard constraint for all subgoals, including sign-off."
+        ],
+        "baseline_notes": [
+          "Uncertainty about available resources may affect stakeholder alignment.",
+          "Skill gaps with government agencies represent a key challenge."
+        ],
+        "constraints": [
+          "Unknowns regarding team resource availability and external approval processes may present delays.",
+          "Skill gaps with government processes could impact securing sign-off."
+        ],
+        "qa": [
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "achievable_1",
+            "question": "What resources (people, time, tools) do you have available specifically for stakeholder alignment in the context of planning a 10k charity run?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "achievable_2",
+            "question": "Are there any skill gaps among your team or stakeholders that might make securing owner sign-off on priorities challenging for the 10k charity run?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "time_bound_1",
+            "question": "What is the target date by which you need to secure owner sign-off on priorities to keep the overall 1-year timeline for the 10k charity run on track?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "time_bound_2",
+            "question": "What milestones or check-in points will you use to track progress towards stakeholder alignment, and how often will they occur?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "constraints_1",
+            "question": "Are there any organizational or external constraints (e.g., conflicting stakeholder schedules, approval processes) that could delay or block alignment?"
+          },
+          {
+            "answer": "do it through any weather",
+            "category": "unknowns",
+            "id": "unknowns_1",
+            "question": "What are the main unknowns or risks that could prevent you from securing stakeholder sign-off on the 10k charity run priorities?"
+          }
+        ],
+        "unknowns": [
+          "Whether sufficient resources (people, time, tools) will be dedicated to stakeholder alignment.",
+          "Impact of weather ('do it through any weather') on reaching all stakeholders.",
+          "Potential delays from unknown external approval processes."
+        ]
+      },
+      "children_ids": [],
+      "id": "n3",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All key stakeholders are mapped, needs documented, regulatory requirements clarified, priorities agreed, and owner sign-off achieved to enable the 10k charity run planning to proceed.",
+            "due": "Within 1 year from project start",
+            "title": "Stakeholder Alignment Complete with Owner Sign-Off"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Compile a comprehensive list of all stakeholders relevant to the 10k charity run, including internal team members, government agencies, sponsors, community leaders, and volunteers. Organize them by level of influence and interest.",
+            "due": "TBD",
+            "estimate_hours": 12.0,
+            "relative_timing": "Month 1",
+            "success_criteria": "A complete stakeholder map shared with the project team, covering all relevant parties.",
+            "title": "Identify and Map Key Stakeholders"
+          },
+          {
+            "depends_on": [
+              "Identify and Map Key Stakeholders"
+            ],
+            "description": "Engage with identified stakeholders via interviews, surveys, or meetings to understand their priorities, concerns, and preferred level of involvement.",
+            "due": "TBD",
+            "estimate_hours": 18.0,
+            "relative_timing": "Month 2",
+            "success_criteria": "A summary document outlining key stakeholder needs, submitted for project review.",
+            "title": "Conduct Stakeholder Needs and Expectations Assessment"
+          },
+          {
+            "depends_on": [
+              "Identify and Map Key Stakeholders",
+              "Conduct Stakeholder Needs and Expectations Assessment"
+            ],
+            "description": "Initiate targeted communication, including requests for meetings and information, with relevant government bodies to clarify event requirements, permits, and regulatory processes.",
+            "due": "TBD",
+            "estimate_hours": 16.0,
+            "relative_timing": "Month 3-4",
+            "success_criteria": "Documented list of government requirements and points of contact. Confirmation of all permit needs.",
+            "title": "Engage Government Agency Contacts for Regulatory Requirements"
+          },
+          {
+            "depends_on": [
+              "Conduct Stakeholder Needs and Expectations Assessment",
+              "Engage Government Agency Contacts for Regulatory Requirements"
+            ],
+            "description": "Organize and facilitate a meeting with key stakeholders (including owner, sponsors, and government representatives) to present event objectives, review feedback, and agree on priorities.",
+            "due": "TBD",
+            "estimate_hours": 8.0,
+            "relative_timing": "Month 5",
+            "success_criteria": "Alignment meeting occurs with majority attendance and documented outcomes.",
+            "title": "Host Stakeholder Alignment Meeting"
+          },
+          {
+            "depends_on": [
+              "Host Stakeholder Alignment Meeting"
+            ],
+            "description": "Submit finalized event priorities in writing to event owner for approval and acquire documented sign-off.",
+            "due": "TBD",
+            "estimate_hours": 2.0,
+            "relative_timing": "Month 6",
+            "success_criteria": "Written owner sign-off received and archived.",
+            "title": "Obtain Formal Owner Sign-Off on Priorities"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "There is a limited amount of experience among the team when working with government agencies, which may create challenges in stakeholder alignment. Resource availability is currently unclear and skill gaps are present; thus, additional support or consultation may be required to achieve owner sign-off.",
+        "measurable": "Secure owner sign-off on priorities",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Stakeholder Alignment for Plan a 10k charity run",
+        "time_bound": "Stakeholder alignment, including owner sign-off, must be completed within 1 year from now to stay on track with the overall event timeline."
+      },
+      "status": "PLANNED",
+      "title": "Stakeholder Alignment",
+      "workstream": "Stakeholders"
+    },
+    "n4": {
+      "baseline": {
+        "assumptions": [
+          "It is assumed that volunteers and other resources can be mobilized as needed once milestone requirements are clarified.",
+          "It is assumed that any gaps in knowledge regarding government processes can be supported by external consultation or quick learning."
+        ],
+        "baseline_notes": [
+          "The timeline is constrained by the overall 1-year event deadline, with all milestones needing alignment to this timeframe.",
+          "Team experience with government processes is limited and represents a potential bottleneck for certain milestones involving permits or compliance requirements."
+        ],
+        "constraints": [
+          "Unknowns regarding resource assignment to milestones.",
+          "Limited government agency experience may delay activities requiring permits or authorizations."
+        ],
+        "qa": [
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "q1",
+            "question": "What are the key milestones that must be completed to achieve the goal of planning a 10k charity run within the 1-year deadline?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "q2",
+            "question": "For each milestone in your timeline, what is the target completion date, and how do these align with the overall 1-year deadline from the parent goal?"
+          },
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "q3",
+            "question": "What resources (e.g., volunteers, tools, budget) are required to achieve each proposed milestone, and do you currently have access to them?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "q4",
+            "question": "What weekly time commitment can you or your team realistically allocate to ensure timely progress towards each milestone?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "q5",
+            "question": "What are the primary constraints (such as resource limitations, schedules, or external dependencies) that may affect the timeline for your milestones?"
+          },
+          {
+            "answer": "do it through any weather",
+            "category": "unknowns",
+            "id": "q6",
+            "question": "Are there any unknowns or risks\u2014such as weather, participant turnout, or permit approvals\u2014that could delay milestones? How can you mitigate them?"
+          },
+          {
+            "answer": "",
+            "category": "assumptions",
+            "id": "q7",
+            "question": "What assumptions are you making regarding volunteer availability and resource allocation across the timeline, and how will you validate these assumptions?"
+          }
+        ],
+        "unknowns": [
+          "Finalized list of all required resources for each milestone.",
+          "Potential requirement changes from local authorities.",
+          "Potential weather disruptions (though intention is to continue regardless of weather)."
+        ]
+      },
+      "children_ids": [],
+      "id": "n4",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All government and regulatory requirements for the 10k run are documented and their processing timelines are accounted for in the project plan.",
+            "due": "2024-07-31",
+            "title": "All Key Permits and Approvals Identified"
+          },
+          {
+            "description": "A comprehensive and finalized milestone plan is published, incorporating feedback and resource requirements, and approved by all stakeholders.",
+            "due": "2024-11-01",
+            "title": "Complete, Sequenced Timeline & Milestone Plan Published"
+          },
+          {
+            "description": "All planned timeline and milestone management work is finished in alignment with the overall 1-year deadline for the charity run.",
+            "due": "2025-06-20",
+            "title": "All Timeline & Milestones Completed for 10k Charity Run Project"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Identify all necessary permits and approvals required from local government agencies for organizing a 10k run. Determine estimated timelines and application requirements.",
+            "due": "2024-07-31",
+            "estimate_hours": 20.0,
+            "relative_timing": "Month 1",
+            "success_criteria": "Comprehensive listing and understanding of all required permits, approvals, and estimated timelines documented.",
+            "title": "Research Government Permit and Approval Processes"
+          },
+          {
+            "depends_on": [
+              "Research Government Permit and Approval Processes"
+            ],
+            "description": "Design a complete project timeline including all key milestones and deliverables, aligned to a 1-year time frame. Publish the timeline to the team and stakeholders.",
+            "due": "2024-08-15",
+            "estimate_hours": 15.0,
+            "relative_timing": "Month 2",
+            "success_criteria": "Timeline document with all key milestones published to the team within 6 weeks.",
+            "title": "Develop and Publish Project Timeline with Sequenced Milestones"
+          },
+          {
+            "depends_on": [
+              "Develop and Publish Project Timeline with Sequenced Milestones"
+            ],
+            "description": "Meet or correspond with professionals who have experience in coordinating large public events to review the proposed timeline and milestones for accuracy and risk mitigation.",
+            "due": "2024-09-01",
+            "estimate_hours": 10.0,
+            "relative_timing": "Month 2-3",
+            "success_criteria": "Feedback from at least two experienced event organizers incorporated into project plan.",
+            "title": "Consult with Experienced Event Organizers"
+          },
+          {
+            "depends_on": [
+              "Consult with Experienced Event Organizers"
+            ],
+            "description": "Update the timeline and milestones as resource requirements and government process details are confirmed. Adjust dependencies to reflect new information from research and consultations.",
+            "due": "2024-10-01",
+            "estimate_hours": 12.0,
+            "relative_timing": "Month 3-4",
+            "success_criteria": "Updated timeline reflecting real permit/resource constraints approved by steering group.",
+            "title": "Integrate Permit and Resource Dependencies Into Milestones"
+          },
+          {
+            "depends_on": [
+              "Integrate Permit and Resource Dependencies Into Milestones"
+            ],
+            "description": "Present the finalized milestone schedule to all team members and stakeholders, address feedback, and make necessary adjustments to ensure buy-in and clarity.",
+            "due": "2024-11-01",
+            "estimate_hours": 8.0,
+            "relative_timing": "Month 5",
+            "success_criteria": "Stakeholder sign-off on the finalized and sequenced milestone schedule.",
+            "title": "Communicate and Review Finalized Milestone Schedule with All Stakeholders"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "There is a limited amount of experience within the team regarding working with government agencies, which may impact timely completion. The ability to achieve proposed milestones will depend on learning or consulting for government processes and securing required resources as they are still being identified.",
+        "measurable": "Publish sequenced milestones for execution",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Timeline & Milestones for Plan a 10k charity run",
+        "time_bound": "All key milestones must be completed within 1 year from now, in alignment with the overall project deadline."
+      },
+      "status": "PLANNED",
+      "title": "Timeline & Milestones",
+      "workstream": "Timeline"
+    },
+    "n5": {
+      "baseline": {
+        "assumptions": [
+          "Volunteers from the parent goal are available for logistics as needed.",
+          "Government agency processes and requirements are a significant gap but can be addressed by learning or seeking external consultation."
+        ],
+        "baseline_notes": [
+          "Operational resource availability is unclear and will need to be clarified as planning progresses.",
+          "The team has sufficient volunteers by count, but lacks experience in dealing with government requirements.",
+          "A hard deadline of 1 year from now is set for all logistics and operational plans to be finalized.",
+          "No firm cadence was specified beyond the overall 1 year deadline, but milestone-based reviews are recommended."
+        ],
+        "constraints": [
+          "Uncertainty on exact operational resources and dependencies.",
+          "Unclear city permit or vendor requirements due to lack of prior experience."
+        ],
+        "qa": [
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "opslog1",
+            "question": "What specific operational resources (e.g., equipment, transportation, venue access) do you have available or need to source for the 10k charity run\u2019s Operations & Logistics?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "opslog2",
+            "question": "How many volunteer hours are required each week to manage essential logistics tasks, and do you have enough volunteers from the parent goal's pool of 200?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "opslog3",
+            "question": "Are there any known constraints or dependencies (such as city permits or vendor contracts) that could impact Operations & Logistics for the run?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "opslog4",
+            "question": "What is the hard deadline for locking in all logistics plans, based on the 1-year timeline of the parent goal?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "opslog5",
+            "question": "What milestone cadence will you use to monitor progress on logistical deliverables within the year (e.g., monthly checkpoints, major deadlines)?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "opslog6",
+            "question": "Are there any skill or knowledge gaps within your logistics team that could prevent timely execution of operational tasks?"
+          },
+          {
+            "answer": "do it through any weather",
+            "category": "unknowns",
+            "id": "opslog7",
+            "question": "What risks or unknowns could disrupt key logistics (e.g., weather, supply chain issues, volunteer turnover) during the planning and execution of the 10k run?"
+          }
+        ],
+        "unknowns": [
+          "Which operational resources exactly need to be sourced?",
+          "Detailed government requirements for permits and vendor contracts remain unknown.",
+          "Weather and other outside disruptions may impact logistics, but event will go ahead as planned ('do it through any weather')."
+        ]
+      },
+      "children_ids": [],
+      "id": "n5",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All required government permits are obtained and documented, allowing logistical planning to proceed.",
+            "due": "4 months before event",
+            "title": "Permit Approval Secured"
+          },
+          {
+            "description": "Comprehensive logistics, vendor, volunteer, and operations plans are documented and approved by organizing team.",
+            "due": "1 month before event",
+            "title": "Operations Plan Finalized and Approved"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Research local government requirements and apply for all necessary permits and permissions to host the 10k charity run. Consult with experienced event organizers or local officials as needed to ensure completeness and compliance.",
+            "due": "4 months before event",
+            "estimate_hours": 40.0,
+            "relative_timing": "First quarter",
+            "success_criteria": "All required permits and permissions received at least 4 months before the event.",
+            "title": "Identify and Secure Government Permits"
+          },
+          {
+            "depends_on": [
+              "Identify and Secure Government Permits"
+            ],
+            "description": "Map out the 10k course, identify key logistical points (start/finish areas, hydration stations, medical support), and document all dependencies and handoffs (e.g., police coordination, road closures).",
+            "due": "3.5 months before event",
+            "estimate_hours": 30.0,
+            "relative_timing": "Immediately after securing permits",
+            "success_criteria": "Official, approved course map and logistics plan shared with all stakeholders and volunteers.",
+            "title": "Design and Document Course Route and Logistics"
+          },
+          {
+            "depends_on": [
+              "Design and Document Course Route and Logistics"
+            ],
+            "description": "Identify, negotiate, and secure contracts with vendors for equipment, water, signage, portable toilets, and first aid. Ensure all supplies are scheduled for delivery in coordination with event date and setup timeline.",
+            "due": "3 months before event",
+            "estimate_hours": 25.0,
+            "relative_timing": "Following course and logistics documentation",
+            "success_criteria": "Signed contracts or confirmed commitments from all required vendors and suppliers.",
+            "title": "Vendor and Supplies Procurement"
+          },
+          {
+            "depends_on": [
+              "Design and Document Course Route and Logistics"
+            ],
+            "description": "Identify key operational volunteer roles, recruit required numbers, and organize training sessions covering responsibilities and emergency procedures.",
+            "due": "2.5 months before event",
+            "estimate_hours": 20.0,
+            "relative_timing": "In parallel with vendor procurement",
+            "success_criteria": "All operational volunteer roles filled and at least one training session conducted for each volunteer group.",
+            "title": "Volunteer Recruitment and Training for Operations Roles"
+          },
+          {
+            "depends_on": [
+              "Vendor and Supplies Procurement",
+              "Volunteer Recruitment and Training for Operations Roles"
+            ],
+            "description": "Compile an operations manual detailing all handoffs, dependencies, contact lists, and a comprehensive schedule for race day. Share with all stakeholders and train team leads.",
+            "due": "1 month before event",
+            "estimate_hours": 15.0,
+            "relative_timing": "Final month before event",
+            "success_criteria": "Operations manual distributed and briefings held with key staff/volunteers at least 1 month before event.",
+            "title": "Create Operations Manual and Day-of Event Schedule"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "While there are 200 volunteers available from the parent goal, the team lacks significant experience with government agencies, which could impact timely progress on operational and logistics tasks. Success will rely on learning or consulting for navigating government processes and securing required resources as they are clarified throughout the year.",
+        "measurable": "Document operational handoffs and dependencies",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Operations & Logistics for Plan a 10k charity run",
+        "time_bound": "All logistics and operational plans must be finalized within 1 year from now, in alignment with the overall event timeline. Progress should be monitored with regular milestone reviews (e.g., monthly checkpoints) to stay on track."
+      },
+      "status": "PLANNED",
+      "title": "Operations & Logistics",
+      "workstream": "Operations"
+    },
+    "n6": {
+      "baseline": {
+        "assumptions": [
+          "Assume risk & compliance approvals can be completed within 1 year if knowledge and resource gaps are addressed early.",
+          "Assume that key regulatory and permit deadlines will not fall outside the 1-year timeline, but this must be validated."
+        ],
+        "baseline_notes": [
+          "There is a clear lack of confirmed resources and experience in government risk and compliance processes.",
+          "Uncertainty exists regarding regulatory requirements, required permits, and deadlines for compliance tasks.",
+          "There is an expressed intention to proceed regardless of weather, indicating willingness to deal with natural risk factors."
+        ],
+        "constraints": [
+          "Unknown external regulations, permits, or insurance requirements may introduce time-sensitive constraints once identified.",
+          "Lack of skill and experience may lengthen the learning curve for compliance tasks."
+        ],
+        "qa": [
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "achievable_1",
+            "question": "What existing resources (such as legal experts, insurance, or compliance officers) do you have access to for managing risk & compliance in planning the 10k charity run?"
+          },
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "achievable_2",
+            "question": "Are there any skill or knowledge gaps among your team or volunteers regarding risk management or compliance that could impact your ability to deliver the required mitigations?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "constraints_1",
+            "question": "What external regulations, permits, or legal requirements must you comply with for the 10k charity run, and are there any constraints (such as deadlines for permit applications) that could affect your timeline?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "timebound_1",
+            "question": "What is the latest date you need all risk & compliance approvals completed to avoid impacting the root deadline of completing the charity run plan in 1 year?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "timebound_2",
+            "question": "Will you set interim milestones to review the progress of risk & compliance tasks (e.g., monthly risk reviews), and if so, what would the cadence be?"
+          },
+          {
+            "answer": "do it through any weather",
+            "category": "unknowns",
+            "id": "unknowns_1",
+            "question": "What are the greatest unknowns or uncertainties about risk & compliance that could put the success of the charity run at risk?"
+          },
+          {
+            "answer": "",
+            "category": "assumptions",
+            "id": "assumptions_1",
+            "question": "What key assumptions are you making about risk & compliance processes, such as permit approval timelines or insurance availability, and how will you validate them during the planning?"
+          }
+        ],
+        "unknowns": [
+          "Exact regulatory requirements for charity runs in the target area.",
+          "Which permits, approvals, or insurance policies are required.",
+          "Whether enough expertise and support can be mobilized in time.",
+          "Impact of adverse weather or unforeseen legal stipulations."
+        ]
+      },
+      "children_ids": [],
+      "id": "n6",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All regulatory approvals, permits, and insurance obtained; top risks actively managed and documented. Project fully compliant and ready for execution.",
+            "due": "1 year from now",
+            "title": "All Risk & Compliance Approvals Secured"
+          },
+          {
+            "description": "Ongoing risk and compliance reviews conducted each month, with checkpoint reports completed and reviewed by project leads.",
+            "due": null,
+            "title": "Monthly Interim Compliance Reviews Completed"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Research and compile a list of all legal, regulatory, and compliance requirements for hosting a 10k charity run, including permits, insurance, health, and safety obligations.",
+            "due": "TBD",
+            "estimate_hours": 12.0,
+            "relative_timing": "Start immediately; complete within Month 1",
+            "success_criteria": "Comprehensive requirements checklist completed and validated by a compliance expert or relevant authority.",
+            "title": "Identify Key Legal and Compliance Requirements"
+          },
+          {
+            "depends_on": [
+              "Identify Key Legal and Compliance Requirements"
+            ],
+            "description": "Engage with legal experts, local government, or compliance officers to validate requirements and clarify gray areas, especially addressing the team's skill and experience gaps.",
+            "due": "TBD",
+            "estimate_hours": 16.0,
+            "relative_timing": "After requirements checklist is drafted; complete by end of Month 2",
+            "success_criteria": "All project-critical requirements confirmed and any unknowns addressed via documented expert input.",
+            "title": "Consult with Legal and Compliance Experts"
+          },
+          {
+            "depends_on": [
+              "Consult with Legal and Compliance Experts"
+            ],
+            "description": "List the top risks (legal, operational, financial, reputational) facing the event, assess likelihood and impact, and document mitigation or management strategies for each.",
+            "due": "TBD",
+            "estimate_hours": 14.0,
+            "relative_timing": "Month 2",
+            "success_criteria": "Risk register with mitigations completed, reviewed, and approved by project leads.",
+            "title": "Perform Risk Assessment and Develop Mitigation Plans"
+          },
+          {
+            "depends_on": [
+              "Perform Risk Assessment and Develop Mitigation Plans"
+            ],
+            "description": "Apply for all required permits and insurance, and ensure all necessary compliance documents are acquired, submitted, and tracked.",
+            "due": "TBD",
+            "estimate_hours": 18.0,
+            "relative_timing": "Start in Month 3; monitor progress monthly until completion",
+            "success_criteria": "All necessary permits and insurance received and compliance documentation ready in project files.",
+            "title": "Secure Permits, Insurance, and Compliance Documentation"
+          },
+          {
+            "depends_on": [
+              "Secure Permits, Insurance, and Compliance Documentation"
+            ],
+            "description": "Set up a cadence of monthly reviews to track risk and compliance progress, re-assess new/ongoing risks, and ensure all requirements and mitigation plans are on track.",
+            "due": "TBD",
+            "estimate_hours": 2.0,
+            "relative_timing": "Ongoing, starting Month 3 through project completion",
+            "success_criteria": "Monthly checkpoint reports produced; emerging risks/issues identified early and addressed within one review cycle.",
+            "title": "Establish Monthly Risk & Compliance Checkpoints"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "There is a significant skill and experience gap within the team regarding working with government agencies and managing risk and compliance. Existing resources such as access to legal experts, insurance, or compliance officers are not confirmed. Achieving this goal will require quickly determining resource availability and actively bridging experience gaps, potentially through external support or targeted learning.",
+        "measurable": "List top risks with assigned mitigations",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Risk & Compliance for Plan a 10k charity run",
+        "time_bound": "All risk and compliance approvals must be completed within 1 year from now, aligned to the overall project deadline. Given the high degree of uncertainty, interim reviews (such as monthly risk/compliance progress reviews) should be established for early detection of issues."
+      },
+      "status": "PLANNED",
+      "title": "Risk & Compliance",
+      "workstream": "Risk"
+    },
+    "n7": {
+      "baseline": {
+        "assumptions": [
+          "The 1-year event timeline is a firm requirement for the communications plan.",
+          "Skill/resource gaps can be closed through targeted training, consultation, or recruitment before major communications activities must launch."
+        ],
+        "baseline_notes": [
+          "The team lacks substantial experience with government agencies as related to communications. This gap is similar to challenges highlighted for other workstreams.",
+          "Specific resources available for communications (people, platforms, materials) are not confirmed and may affect ability to launch/maintain communications.",
+          "Deadline for all communications planning is hard-aligned to the 1-year event deadline; no additional slack available.",
+          "Monitoring at regular intervals is likely necessary to reduce risk of missing the overall timeline."
+        ],
+        "constraints": [
+          "Uncertainty regarding approval processes and platform capabilities may create delays.",
+          "Resource confirmity (people, digital tools, budget) is assumed but not yet validated."
+        ],
+        "qa": [
+          {
+            "answer": "we dont have many years of experience working with government agencies",
+            "category": "achievable",
+            "id": "achievable_1",
+            "question": "What specific skills or experience do you or your team need to execute the Communications Plan for the 10k charity run, and are there any skill gaps?"
+          },
+          {
+            "answer": "im not sure",
+            "category": "resources",
+            "id": "resources_1",
+            "question": "What resources (people, budget, digital platforms, promotional materials) are already available for the Communications Plan, considering you have access to 200 volunteers for the overall event?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "time_bound_1",
+            "question": "What is the hard deadline for completing the Communications Plan to ensure it supports the overall 1-year timeline for the 10k charity run?"
+          },
+          {
+            "answer": "1 year from now",
+            "category": "time_bound",
+            "id": "time_bound_2",
+            "question": "What are the key milestones and communication cadence you need to establish (e.g., weekly updates, campaign launches) and by when?"
+          },
+          {
+            "answer": "not sure",
+            "category": "constraints",
+            "id": "constraints_1",
+            "question": "Are there any constraints, such as approval processes or platform limitations, that could delay or impact the execution of the Communications Plan?"
+          },
+          {
+            "answer": "do it through any weather",
+            "category": "unknowns",
+            "id": "unknowns_1",
+            "question": "What are the main unknowns or risks that could affect the success of the Communications Plan for the 10k charity run?"
+          }
+        ],
+        "unknowns": [
+          "Whether the team can close skills and resource gaps quickly enough to stay on schedule.",
+          "Exact digital platforms, tools, and materials to be used for communication are not yet identified.",
+          "Weather or external events could disrupt planned communication cadence."
+        ]
+      },
+      "children_ids": [],
+      "id": "n7",
+      "layer": 1,
+      "parent_id": "root",
+      "plan": {
+        "milestones": [
+          {
+            "description": "All major communications planning and preparation tasks completed, including skills gap bridge, channel setup, and cadence documentation.",
+            "due": "4 months from start",
+            "title": "Communications Plan Framework Finalized"
+          },
+          {
+            "description": "Progress on communications plan is monitored and any necessary adjustments are documented during the first regular milestone check.",
+            "due": "5 months from start",
+            "title": "First Monthly Milestone Review Completed"
+          },
+          {
+            "description": "Full communications infrastructure and protocols established and ready, reviewed no later than 1 year from start to ensure alignment with event.",
+            "due": "12 months from start",
+            "title": "All Communications Systems Ready for Charity Run"
+          }
+        ],
+        "tasks": [
+          {
+            "depends_on": [],
+            "description": "Evaluate the existing team\u2019s capabilities in communications, with a focus on experience dealing with government agencies and public outreach. Identify specific skills and resource gaps (e.g., platforms, materials).",
+            "due": "2 weeks from start",
+            "estimate_hours": 8.0,
+            "relative_timing": "Start of project",
+            "success_criteria": "Comprehensive assessment report produced outlining current skills, experience gaps, and resource needs.",
+            "title": "Assess Team Communication Skills and Identify Gaps"
+          },
+          {
+            "depends_on": [
+              "Assess Team Communication Skills and Identify Gaps"
+            ],
+            "description": "Bridge identified skills and knowledge gaps by organizing targeted training sessions or engaging expert consultants for communications planning, especially for government and partner engagement.",
+            "due": "1 month from start",
+            "estimate_hours": 20.0,
+            "relative_timing": "After gap assessment",
+            "success_criteria": "At least one relevant training session held or consultation completed; participants rate usefulness as effective.",
+            "title": "Source Communications Training or Consultations"
+          },
+          {
+            "depends_on": [
+              "Source Communications Training or Consultations"
+            ],
+            "description": "Draft a comprehensive communications plan including key messages, target audiences, suggested channels, and communications cadence, reflecting lessons learned from training/consultations.",
+            "due": "2 months from start",
+            "estimate_hours": 16.0,
+            "relative_timing": "After training/consultations",
+            "success_criteria": "Initial communications plan outline completed and reviewed by core team for completeness and feasibility.",
+            "title": "Develop Communications Strategy Outline"
+          },
+          {
+            "depends_on": [
+              "Develop Communications Strategy Outline"
+            ],
+            "description": "Establish and test all selected communication platforms (e.g., email lists, social media groups, website updates). Ensure all team members have access and understand how to use them.",
+            "due": "3 months from start",
+            "estimate_hours": 12.0,
+            "relative_timing": "After strategy outline",
+            "success_criteria": "All channels operational and accessible; internal test messages sent and confirmed received/responded by team members.",
+            "title": "Set Up and Test Communication Channels"
+          },
+          {
+            "depends_on": [
+              "Set Up and Test Communication Channels"
+            ],
+            "description": "Publish a documented communication schedule and update protocol (who sends what, how often). Run an onboarding session for all relevant team members to confirm understanding.",
+            "due": "4 months from start",
+            "estimate_hours": 8.0,
+            "relative_timing": "After channel setup",
+            "success_criteria": "Cadence and protocols published to all participants; onboarding session attended by at least 90% of target team.",
+            "title": "Publish Communication Cadence and Onboard Team"
+          }
+        ]
+      },
+      "smart": {
+        "achievable": "There are significant skill and experience gaps within the team concerning communications with government agencies, as the team has little prior experience. Resource availability specific to communications (platforms, promotional materials) is uncertain, potentially limiting execution. Bridging skill and platform/resource gaps (potentially via training, consultation, or targeted recruitment) will be critical for timely and effective execution.",
+        "measurable": "Set communication cadence and update channels",
+        "relevant": "Supports Plan a 10k charity run",
+        "specific": "Communications Plan for Plan a 10k charity run",
+        "time_bound": "All communications planning, including cadence and update channel setup, must be completed within 1 year from now to align with the overall event timeline. Progress should be monitored with regular milestone checks (e.g., monthly reviews) to ensure timely delivery and adaptation."
+      },
+      "status": "PLANNED",
+      "title": "Communications Plan",
+      "workstream": "Comms"
+    },
+    "root": {
+      "baseline": {
+        "assumptions": [
+          "none"
+        ],
+        "baseline_notes": [
+          "10",
+          "i need it done in 1 year",
+          "i have 200 voluunteers"
+        ],
+        "constraints": [
+          "none"
+        ],
+        "qa": [
+          {
+            "answer": "10",
+            "category": "achievable",
+            "id": "achievable_time_budget",
+            "question": "How much time can you reliably commit each week to 'Plan a 10k charity run' (hours/week)?"
+          },
+          {
+            "answer": "i need it done in 1 year",
+            "category": "time_bound",
+            "id": "timebound_deadline",
+            "question": "What target date or deadline should 'Plan a 10k charity run' hit to stay aligned with 'Plan a 10k charity run'?"
+          },
+          {
+            "answer": "i have 200 voluunteers",
+            "category": "resources",
+            "id": "resources_available",
+            "question": "What resources (people, budget, tools) are already available for 'Plan a 10k charity run' under 'Plan a 10k charity run'?"
+          },
+          {
+            "answer": "none",
+            "category": "constraints",
+            "id": "constraints_dependencies",
+            "question": "What constraints or dependencies from 'Plan a 10k charity run' could limit 'Plan a 10k charity run'?"
+          },
+          {
+            "answer": "none",
+            "category": "unknowns",
+            "id": "risks_unknowns",
+            "question": "What risks or unknowns are most likely to block 'Plan a 10k charity run'?"
+          },
+          {
+            "answer": "none",
+            "category": "assumptions",
+            "id": "definition_of_done",
+            "question": "What concrete output would make 'Plan a 10k charity run' realistically achievable in this phase?"
+          }
+        ],
+        "unknowns": [
+          "none"
+        ]
+      },
+      "children_ids": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5",
+        "n6",
+        "n7"
+      ],
+      "id": "root",
+      "layer": 0,
+      "parent_id": null,
+      "plan": null,
+      "smart": {
+        "achievable": "10; resources: i have 200 voluunteers",
+        "measurable": "",
+        "relevant": "",
+        "specific": "Plan a 10k charity run",
+        "time_bound": "i need it done in 1 year"
+      },
+      "status": "BASELINED",
+      "title": "Plan a 10k charity run",
+      "workstream": "Goal"
+    }
+  },
+  "root_id": "root",
+  "updated_at": "2026-02-19T01:00:06.853297+00:00"
+}
