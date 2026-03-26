@@ -12,6 +12,12 @@ class NodeStatus(str, Enum):
     PLANNED = "PLANNED"
 
 
+class CheckState(str, Enum):
+    unchecked = "unchecked"
+    partial = "partial"
+    checked = "checked"
+
+
 class SMARTFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -59,21 +65,21 @@ class Task(BaseModel):
     estimate_hours: Optional[float] = None
     relative_timing: Optional[str] = None
     due: Optional[str] = None
-
-
-class Milestone(BaseModel):
-    model_config = ConfigDict(extra="forbid")
-
-    title: str
-    description: str = ""
-    due: Optional[str] = None
+    completed: bool = False
 
 
 class NodePlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     tasks: list[Task] = Field(default_factory=list)
-    milestones: list[Milestone] = Field(default_factory=list)
+
+    @model_validator(mode="before")
+    @classmethod
+    def _drop_legacy_milestones(cls, data: object) -> object:
+        if isinstance(data, dict) and "milestones" in data:
+            data = dict(data)
+            data.pop("milestones", None)
+        return data
 
 
 class Node(BaseModel):

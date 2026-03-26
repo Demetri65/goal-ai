@@ -7,13 +7,16 @@ from smart_got.llm import LLMProvider
 from smart_got.models import (
     AddSiblingMutation,
     BaselineQA,
+    CheckState,
     DeleteNodeMutation,
     Graph,
     Mutation,
     Node,
     NodeBaseline,
+    NodePlan,
     NodeStatus,
     SMARTFields,
+    Task,
     UpdateNodeMutation,
 )
 
@@ -38,6 +41,13 @@ def _merge_smart_fields(current: SMARTFields, patch: SMARTFields) -> SMARTFields
         if value != "":
             data[key] = value
     return SMARTFields(**data)
+
+
+def _require_node(graph: Graph, node_id: str) -> Node:
+    node = graph.nodes.get(node_id)
+    if node is None:
+        raise KeyError(f"Node not found: {node_id}")
+    return node
 
 
 def init_graph(goal: str) -> Graph:
@@ -117,9 +127,7 @@ def _baseline_summary_lines(label: str, baseline: NodeBaseline | None) -> list[s
 
 
 def build_context(graph: Graph, node_id: str) -> str:
-    node = graph.nodes.get(node_id)
-    if node is None:
-        raise KeyError(f"Node not found: {node_id}")
+    node = _require_node(graph, node_id)
 
     root = graph.nodes[graph.root_id]
     parent = graph.nodes.get(node.parent_id) if node.parent_id else None
@@ -150,9 +158,7 @@ def provider_context(graph: Graph, node_id: str) -> str:
 
 
 def layer_children(graph: Graph, parent_id: str) -> list[str]:
-    parent = graph.nodes.get(parent_id)
-    if parent is None:
-        raise KeyError(f"Node not found: {parent_id}")
+    parent = _require_node(graph, parent_id)
     return [child_id for child_id in parent.children_ids if child_id in graph.nodes]
 
 
@@ -172,9 +178,7 @@ def decompose_node(
     max_children: int = 9,
 ) -> tuple[Graph, list[str]]:
     new_graph = graph.model_copy(deep=True)
-    node = new_graph.nodes.get(node_id)
-    if node is None:
-        raise KeyError(f"Node not found: {node_id}")
+    node = _require_node(new_graph, node_id)
     if node.status == NodeStatus.DRAFT and node.parent_id is not None:
         raise ValueError(f"Node {node.id} is not baselined; baseline it first.")
     if node.children_ids:
@@ -210,6 +214,230 @@ def decompose_node(
     return new_graph, new_ids
 
 
+def add_node(
+    graph: Graph,
+    parent_id: str,
+    title: str,
+    workstream: str,
+    smart: SMARTFields,
+) -> tuple[Graph, str]:
+    new_graph = graph.model_copy(deep=True)
+    parent = _require_node(new_graph, parent_id)
+    child_id = _next_node_id(new_graph.nodes)
+    new_graph.nodes[child_id] = Node(
+        id=child_id,
+        title=title,
+        workstream=workstream,
+        layer=parent.layer + 1,
+        parent_id=parent.id,
+        smart=smart,
+    )
+    parent.children_ids.append(child_id)
+    new_graph.updated_at = _now_iso()
+    return new_graph, child_id
+
+
+def update_node(
+    graph: Graph,
+    node_id: str,
+    title: Optional[str] = None,
+    workstream: Optional[str] = None,
+    smart_patch: Optional[SMARTFields] = None,
+) -> Graph:
+    if title is None and workstream is None and smart_patch is None:
+        raise ValueError("Node update requires title, workstream, and/or smart_patch.")
+    new_graph = graph.model_copy(deep=True)
+    node = _require_node(new_graph, node_id)
+    if title is not None:
+        node.title = title
+    if workstream is not None:
+        node.workstream = workstream
+    if smart_patch is not None:
+        node.smart = _merge_smart_fields(node.smart, smart_patch)
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
+def delete_node(graph: Graph, node_id: str) -> Graph:
+    new_graph = graph.model_copy(deep=True)
+    node = _require_node(new_graph, node_id)
+    if node.id == new_graph.root_id:
+        raise ValueError("Cannot delete the root node.")
+    if node.children_ids:
+        raise ValueError(f"Cannot delete node with children: {node.id}")
+
+    parent_id = node.parent_id
+    if parent_id:
+        parent = new_graph.nodes.get(parent_id)
+        if parent:
+            parent.children_ids = [child_id for child_id in parent.children_ids if child_id != node.id]
+
+    del new_graph.nodes[node.id]
+
+    if new_graph.focus_parent_id == node.id:
+        fallback_parent = parent_id or new_graph.root_id
+        focus = _require_node(new_graph, fallback_parent)
+        new_graph.focus_parent_id = fallback_parent
+        new_graph.active_layer = focus.layer + 1
+
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
+def set_focus(graph: Graph, focus_parent_id: str, active_layer: Optional[int] = None) -> Graph:
+    new_graph = graph.model_copy(deep=True)
+    focus = _require_node(new_graph, focus_parent_id)
+    new_graph.focus_parent_id = focus_parent_id
+    new_graph.active_layer = active_layer if active_layer and active_layer > 0 else focus.layer + 1
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
+def node_progress(node: Node) -> dict[str, object]:
+    tasks = node.plan.tasks if node.plan else []
+    total_tasks = len(tasks)
+    completed_tasks = sum(1 for task in tasks if task.completed)
+    if total_tasks == 0 or completed_tasks == 0:
+        check_state = CheckState.unchecked
+    elif completed_tasks == total_tasks:
+        check_state = CheckState.checked
+    else:
+        check_state = CheckState.partial
+    return {
+        "total_tasks": total_tasks,
+        "completed_tasks": completed_tasks,
+        "check_state": check_state.value,
+    }
+
+
+def graph_progress(graph: Graph) -> dict[str, dict[str, object]]:
+    return {node_id: node_progress(node) for node_id, node in graph.nodes.items()}
+
+
+def toggle_task_completion(
+    graph: Graph,
+    node_id: str,
+    task_index: int,
+    completed: bool,
+) -> Graph:
+    new_graph = graph.model_copy(deep=True)
+    node = _require_node(new_graph, node_id)
+    if node.plan is None or not node.plan.tasks:
+        raise ValueError(f"Node {node_id} has no tasks to toggle.")
+    if task_index < 0 or task_index >= len(node.plan.tasks):
+        raise ValueError(f"Task index out of range for node {node_id}: {task_index}")
+    node.plan.tasks[task_index].completed = completed
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
+def toggle_subgoal_completion(
+    graph: Graph,
+    node_id: str,
+    completed: bool,
+) -> Graph:
+    new_graph = graph.model_copy(deep=True)
+    node = _require_node(new_graph, node_id)
+    if node.plan is None or not node.plan.tasks:
+        raise ValueError(f"Node {node_id} has no tasks to toggle.")
+    for task in node.plan.tasks:
+        task.completed = completed
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
+def _find_cycle(graph_by_task: dict[str, list[str]]) -> bool:
+    visited: set[str] = set()
+    visiting: set[str] = set()
+
+    def dfs(task_title: str) -> bool:
+        if task_title in visiting:
+            return True
+        if task_title in visited:
+            return False
+        visiting.add(task_title)
+        for dep in graph_by_task.get(task_title, []):
+            if dfs(dep):
+                return True
+        visiting.remove(task_title)
+        visited.add(task_title)
+        return False
+
+    for title in graph_by_task:
+        if dfs(title):
+            return True
+    return False
+
+
+def validate_plan_replacement(tasks: list[Task]) -> list[str]:
+    errors: list[str] = []
+    titles: list[str] = []
+
+    for idx, task in enumerate(tasks):
+        title = task.title.strip()
+        if not title:
+            errors.append(f"tasks[{idx}].title is required")
+        if not task.description.strip():
+            errors.append(f"tasks[{idx}].description is required")
+        if not task.success_criteria.strip():
+            errors.append(f"tasks[{idx}].success_criteria is required")
+        if not (task.relative_timing or "").strip():
+            errors.append(f"tasks[{idx}].relative_timing is required")
+        if not (task.due or "").strip():
+            errors.append(f"tasks[{idx}].due is required")
+        titles.append(title)
+
+    non_empty_titles = [title for title in titles if title]
+    if len(non_empty_titles) != len(set(non_empty_titles)):
+        errors.append("task titles must be unique per node")
+
+    title_set = set(non_empty_titles)
+    dep_graph: dict[str, list[str]] = {}
+    for idx, task in enumerate(tasks):
+        title = task.title.strip()
+        if not title:
+            continue
+        dep_graph[title] = []
+        for dep in task.depends_on:
+            dep_title = dep.strip()
+            if not dep_title:
+                errors.append(f"tasks[{idx}].depends_on contains empty dependency")
+                continue
+            if dep_title not in title_set:
+                errors.append(
+                    f"tasks[{idx}].depends_on target not found: '{dep_title}'"
+                )
+                continue
+            if dep_title == title:
+                errors.append(
+                    f"tasks[{idx}].depends_on cannot include self: '{title}'"
+                )
+                continue
+            dep_graph[title].append(dep_title)
+
+    if dep_graph and _find_cycle(dep_graph):
+        errors.append("task dependencies contain a cycle")
+
+    return errors
+
+
+def replace_plan(
+    graph: Graph,
+    node_id: str,
+    tasks: list[Task],
+) -> Graph:
+    errors = validate_plan_replacement(tasks)
+    if errors:
+        raise ValueError("; ".join(errors))
+
+    new_graph = graph.model_copy(deep=True)
+    node = _require_node(new_graph, node_id)
+    node.plan = NodePlan(tasks=tasks)
+    node.status = NodeStatus.PLANNED
+    new_graph.updated_at = _now_iso()
+    return new_graph
+
+
 def _apply_mutation(graph: Graph, mutation: Mutation) -> None:
     if isinstance(mutation, UpdateNodeMutation):
         node = graph.nodes.get(mutation.node_id)
@@ -241,6 +469,8 @@ def _apply_mutation(graph: Graph, mutation: Mutation) -> None:
         node = graph.nodes.get(mutation.node_id)
         if node is None:
             return
+        if node.id == graph.root_id:
+            raise ValueError("Cannot delete the root node.")
         if node.children_ids:
             raise ValueError(f"Cannot delete node with children: {node.id}")
         if node.parent_id:
@@ -288,9 +518,7 @@ def baseline_interview(
     ask_fn: Callable[[str], str],
 ) -> tuple[Graph, list[str]]:
     new_graph = graph.model_copy(deep=True)
-    node = new_graph.nodes.get(node_id)
-    if node is None:
-        raise KeyError(f"Node not found: {node_id}")
+    node = _require_node(new_graph, node_id)
 
     siblings = _siblings_for_node(new_graph, node)
     context = build_context(new_graph, node_id)
@@ -325,9 +553,7 @@ def plan_node(
     provider: LLMProvider,
 ) -> Graph:
     new_graph = graph.model_copy(deep=True)
-    node = new_graph.nodes.get(node_id)
-    if node is None:
-        raise KeyError(f"Node not found: {node_id}")
+    node = _require_node(new_graph, node_id)
 
     context = build_context(new_graph, node_id)
     output = provider.plan(node, context)
@@ -354,9 +580,7 @@ def apply_baseline(
     if layer_mutations:
         apply_layer_mutations(new_graph, layer_mutations)
 
-    node = new_graph.nodes.get(node_id)
-    if node is None:
-        raise KeyError(f"Node not found: {node_id}")
+    node = _require_node(new_graph, node_id)
     node.baseline = baseline or NodeBaseline(
         qa=qa_pairs,
         baseline_notes=baseline_notes or [],

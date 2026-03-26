@@ -15,3 +15,7 @@ build/
 .coverage
 .DS_Store
 *.log
+apps/web/.next/
+apps/web/node_modules/
+apps/web/.turbo/
+out/ui_sessions/

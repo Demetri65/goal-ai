@@ -1,0 +1,5 @@
+.next
+node_modules
+
+# TypeScript
+apps/web/tsconfig.tsbuildinfo

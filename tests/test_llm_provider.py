@@ -1,6 +1,6 @@
 from smart_got import engine
 from smart_got.llm import MockProvider, OpenAIProvider, get_provider
-from smart_got.models import Milestone, NodePlan, PlanOutput, SMARTFields, Task
+from smart_got.models import NodePlan, PlanOutput, SMARTFields, Task
 
 
 def test_mock_baseline_questions_focus_on_achievable_and_timebound():
@@ -27,7 +27,6 @@ def test_mock_plan_output_has_due_and_relative_timing():
     output = provider.plan(node, context)
 
     assert 3 <= len(output.plan.tasks) <= 6
-    assert 1 <= len(output.plan.milestones) <= 3
     for task in output.plan.tasks:
         assert task.relative_timing
         assert task.due
@@ -80,7 +79,6 @@ def test_openai_plan_ensures_due_fields_without_network(monkeypatch):
                     due="2026-07-01",
                 ),
             ],
-            milestones=[Milestone(title="Pilot checkpoint", due=None)],
         ),
     )
     monkeypatch.setattr(provider, "_parse_structured", lambda *args, **kwargs: parsed_output)

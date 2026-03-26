@@ -87,7 +87,6 @@ def _print_layer_summary(graph, parent_id: str, as_json: bool) -> None:
     for child_id in layer_children(graph, parent_id):
         node = graph.nodes[child_id]
         task_count = len(node.plan.tasks) if node.plan else 0
-        milestone_count = len(node.plan.milestones) if node.plan else 0
         rows.append(
             {
                 "id": node.id,
@@ -95,7 +94,6 @@ def _print_layer_summary(graph, parent_id: str, as_json: bool) -> None:
                 "title": node.title,
                 "tasks": task_count,
                 "nearest_due": _nearest_due(node),
-                "milestones": milestone_count,
             }
         )
 
@@ -107,7 +105,7 @@ def _print_layer_summary(graph, parent_id: str, as_json: bool) -> None:
     for row in rows:
         print(
             f"- {row['id']} | {row['workstream']} | {row['title']} | "
-            f"tasks:{row['tasks']} | due:{row['nearest_due']} | milestones:{row['milestones']}"
+            f"tasks:{row['tasks']} | due:{row['nearest_due']}"
         )
 
 
@@ -462,10 +460,8 @@ def _handle_show(args: argparse.Namespace) -> None:
     print(f"- TimeBound: {node.smart.time_bound or '-'}")
     qa_count = len(node.baseline.qa) if node.baseline else 0
     task_count = len(node.plan.tasks) if node.plan else 0
-    milestone_count = len(node.plan.milestones) if node.plan else 0
     print(f"Baseline QA count: {qa_count}")
     print(f"Plan tasks: {task_count}")
-    print(f"Plan milestones: {milestone_count}")
 
 
 def build_parser() -> argparse.ArgumentParser:

@@ -167,7 +167,7 @@ class OpenAIProvider:
         fallback = [
             ("Scope", "Define Scope and Success"),
             ("Resources", "Plan Resource Coverage"),
-            ("Timeline", "Build Timeline and Milestones"),
+            ("Timeline", "Build Timeline"),
             ("Risk", "Manage Risk and Compliance"),
             ("Operations", "Prepare Operations Logistics"),
             ("Stakeholders", "Align Stakeholder Owners"),
@@ -265,7 +265,6 @@ class OpenAIProvider:
                 )
             )
         output.plan.tasks = normalized_tasks
-        output.plan.milestones = output.plan.milestones[:3]
         return output
 
     def decompose(

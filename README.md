@@ -32,3 +32,17 @@ smartgot show root --graph ./out/graph.json
 ```
 
 Use `--json` on `run`, `status`, or `show` for machine-readable output.
+
+## Sidecar API (web backend)
+
+```bash
+uvicorn apps.api.main:app --host 127.0.0.1 --port 8001
+```
+
+## Web Console (Next.js)
+
+```bash
+cd apps/web
+pnpm install
+pnpm dev
+```

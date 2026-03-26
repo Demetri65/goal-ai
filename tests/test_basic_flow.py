@@ -33,7 +33,7 @@ class FakeAskFn:
         q = question_text.lower()
         if "hours/week" in q or "commit each week" in q:
             return "achievable"
-        if "target date" in q or "deadline" in q or "milestone cadence" in q:
+        if "target date" in q or "deadline" in q or "checkpoint cadence" in q:
             return "time_bound"
         if "what resources" in q:
             return "resources"

@@ -45,10 +45,10 @@ _BASELINE_QUESTION_SPECS: tuple[_BaselineQuestionSpec, ...] = (
         ),
     },
     {
-        "id": "timebound_milestone_cadence",
+        "id": "timebound_checkpoint_cadence",
         "category": "time_bound",
         "template": (
-            "What milestone cadence (for example weekly/biweekly checkpoints) is realistic "
+            "What checkpoint cadence (for example weekly/biweekly reviews) is realistic "
             "for '{node_title}' before the target date?"
         ),
     },
@@ -120,7 +120,7 @@ def baseline_questions_instructions() -> str:
         "- Generate 4 to 8 questions.\n"
         "- Questions must target:\n"
         "  - Achievable: resources, weekly time budget, skill gaps, and constraints.\n"
-        "  - TimeBound: hard deadline, target date, milestone cadence.\n"
+        "  - TimeBound: hard deadline, target date, and execution cadence.\n"
         "  - Constraints and risks.\n"
         "- Questions must reference parent/root context where relevant.\n"
         "- Keep questions specific and answerable in one response.\n"
@@ -185,7 +185,7 @@ def plan_instructions() -> str:
         "You are generating an execution plan for a SMART goal node.\n"
         "Return only structured output and follow all constraints exactly.\n"
         "Constraints:\n"
-        "- Return 3 to 6 tasks and 1 to 3 milestones.\n"
+        "- Return 3 to 6 tasks.\n"
         "- Each task must include:\n"
         "  - title\n"
         "  - description\n"
@@ -193,7 +193,6 @@ def plan_instructions() -> str:
         "  - depends_on\n"
         "  - estimate_hours when possible\n"
         "  - due and relative_timing when possible\n"
-        "- Milestones should tie back to the node time_bound target.\n"
         "- smart_patch may be empty strings if no SMART changes are needed.\n"
         "- Avoid placeholder task names."
     )

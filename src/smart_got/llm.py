@@ -10,7 +10,6 @@ from smart_got.models import (
     BaselineQA,
     BaselineQuestion,
     ChildDraft,
-    Milestone,
     Node,
     NodeBaseline,
     NodePlan,
@@ -54,7 +53,7 @@ class MockProvider:
         ("Scope", "Define Scope and Success", "Define acceptance criteria for this workstream"),
         ("Resources", "Plan Resource Coverage", "Confirm staffing, budget, and tooling coverage"),
         ("Stakeholders", "Align Stakeholder Owners", "Secure owner sign-off on priorities"),
-        ("Timeline", "Build Timeline and Milestones", "Publish sequenced milestones for execution"),
+        ("Timeline", "Build Timeline", "Publish sequenced execution checkpoints"),
         ("Operations", "Prepare Operations Logistics", "Document operational handoffs and dependencies"),
         ("Risk", "Manage Risk and Compliance", "List top risks with assigned mitigations"),
         ("Communications", "Set Communication Plan", "Set communication cadence and update channels"),
@@ -238,21 +237,9 @@ class MockProvider:
                 due="TBD",
             ),
         ]
-        milestones = [
-            Milestone(
-                title=f"{node.title} kickoff approved",
-                description="Scope, owners, and sequencing approved.",
-                due="TBD",
-            ),
-            Milestone(
-                title=f"{node.title} execution checkpoint",
-                description="Mid-cycle status reviewed against measurable outcomes.",
-                due="TBD",
-            ),
-        ]
         return PlanOutput(
             smart_patch=SMARTFields(),
-            plan=NodePlan(tasks=tasks, milestones=milestones),
+            plan=NodePlan(tasks=tasks),
         )
 
 
