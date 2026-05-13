@@ -32,7 +32,7 @@ from apps.api.types import (
 )
 from smart_got import engine
 from smart_got.llm import get_provider
-from smart_got.store import load_graph, save_graph
+from smart_got.store import graph_exists, load_graph, save_graph
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
@@ -75,11 +75,7 @@ registry = JobRegistry()
 
 
 def _split_env_list(name: str) -> list[str]:
-    return [
-        item.strip().rstrip("/")
-        for item in os.getenv(name, "").split(",")
-        if item.strip()
-    ]
+    return [item.strip().rstrip("/") for item in os.getenv(name, "").split(",") if item.strip()]
 
 
 app.add_middleware(
@@ -106,12 +102,14 @@ def _resolve_graph_path(path: str) -> Path:
     path_obj = Path(path).expanduser()
     if path_obj.is_absolute():
         return path_obj
+    if os.getenv("VERCEL"):
+        return (Path("/tmp/smartgot") / path_obj).resolve()
     return (PROJECT_ROOT / path_obj).resolve()
 
 
 def _load_graph_or_error(path: str):
     path_obj = _resolve_graph_path(path)
-    if not path_obj.exists():
+    if not graph_exists(path_obj):
         raise HTTPException(
             status_code=404,
             detail=(
@@ -225,7 +223,7 @@ def get_graph(path: str = Query(DEFAULT_GRAPH_PATH)) -> dict[str, Any]:
 @app.post("/api/v1/graph/init")
 def init_graph(request: GraphInitRequest) -> dict[str, Any]:
     path_obj = _resolve_graph_path(request.path)
-    if path_obj.exists() and not request.overwrite:
+    if graph_exists(path_obj) and not request.overwrite:
         raise HTTPException(
             status_code=409,
             detail=(

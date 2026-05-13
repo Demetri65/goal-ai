@@ -1,14 +1,16 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 from typing import Any
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from apps.api.types import UISessionPayload, now_iso
+from smart_got.blob_storage import blob_enabled, get_blob_text, put_blob_text
 
-SESSION_DIR = Path("out/ui_sessions")
+SESSION_DIR = Path("/tmp/smartgot/ui_sessions") if os.getenv("VERCEL") else Path("out/ui_sessions")
 
 
 class UISessionRecord(BaseModel):
@@ -34,9 +36,15 @@ def _session_path(session_id: str) -> Path:
 
 
 def load_session(session_id: str) -> UISessionRecord:
+    safe_id = _safe_session_id(session_id)
+    if blob_enabled():
+        data = get_blob_text("ui_sessions", f"{safe_id}.json")
+        if data is None:
+            return UISessionRecord(session_id=safe_id)
+        return UISessionRecord.model_validate_json(data)
     path = _session_path(session_id)
     if not path.exists():
-        return UISessionRecord(session_id=_safe_session_id(session_id))
+        return UISessionRecord(session_id=safe_id)
     data = json.loads(path.read_text())
     return UISessionRecord.model_validate(data)
 
@@ -49,6 +57,9 @@ def save_session(session_id: str, payload: UISessionPayload) -> UISessionRecord:
         messages=payload.messages,
         metadata=payload.metadata,
     )
+    if blob_enabled():
+        put_blob_text("ui_sessions", f"{safe_id}.json", record.model_dump_json(indent=2))
+        return record
     path = _session_path(safe_id)
     tmp = path.with_suffix(path.suffix + ".tmp")
     tmp.write_text(record.model_dump_json(indent=2))

@@ -21,4 +21,5 @@ pnpm-debug.log*
 apps/web/.next/
 apps/web/node_modules/
 apps/web/.turbo/
+out/*.json
 out/ui_sessions/
