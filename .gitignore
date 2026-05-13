@@ -8,9 +8,17 @@ build/
 .venv/
 .env
 .env.*
+.python-version
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .coverage
 .DS_Store
 *.log
+node_modules/
+.turbo/
+pnpm-debug.log*
+apps/web/.next/
+apps/web/node_modules/
+apps/web/.turbo/
+out/ui_sessions/
