@@ -8,7 +8,7 @@ from typing import Any, Awaitable, Callable
 
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import RedirectResponse, StreamingResponse
 
 from apps.api.jobs import JobRegistry
 from apps.api.session_store import load_session, save_session
@@ -185,11 +185,16 @@ async def _submit_graph_job(kind: str, operation: JobOperation) -> JobAccepted:
 
 
 @app.get("/")
-def root() -> dict[str, str]:
+def root():
+    web_url = os.getenv("SMARTGOT_WEB_URL", "").strip()
+    if web_url:
+        return RedirectResponse(web_url, status_code=307)
+
     return {
         "status": "ok",
         "service": "SMART-GoT API",
         "health": "/health",
+        "app": "Set SMARTGOT_WEB_URL to redirect this route to the web app.",
     }
 
 
