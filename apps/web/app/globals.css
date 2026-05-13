@@ -4,48 +4,31 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-    --radius: 0.75rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 6.5%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --background: 240 8% 4%;
+    --foreground: 0 0% 96%;
+    --card: 240 7% 6%;
+    --card-foreground: 0 0% 96%;
+    --popover: 240 7% 6%;
+    --popover-foreground: 0 0% 96%;
+    --primary: 246 72% 70%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 240 7% 11%;
+    --secondary-foreground: 0 0% 96%;
+    --muted: 240 6% 9%;
+    --muted-foreground: 240 5% 62%;
+    --accent: 246 72% 70%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 66% 47%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 240 6% 12%;
+    --input: 240 6% 10%;
+    --ring: 246 72% 70%;
+    --radius: 0.9rem;
+    --panel: rgba(15, 15, 18, 0.92);
+    --panel-soft: rgba(26, 26, 31, 0.88);
+    --panel-muted: rgba(42, 42, 48, 0.7);
+    --rail: rgba(8, 8, 10, 0.95);
+    --glow: rgba(121, 110, 255, 0.1);
   }
 
   * {
@@ -57,11 +40,77 @@
     height: 100%;
   }
 
+  html {
+    color-scheme: dark;
+  }
+
   body {
     @apply bg-background text-foreground antialiased;
+    font-family: var(--font-display), sans-serif;
+    background-image:
+      radial-gradient(circle at top left, rgba(98, 90, 214, 0.08), transparent 24%),
+      radial-gradient(circle at top right, rgba(95, 95, 105, 0.12), transparent 20%),
+      linear-gradient(180deg, #0c0c0f 0%, #060607 100%);
+  }
+
+  button,
+  input,
+  textarea {
+    font: inherit;
   }
 }
 
-.react-flow__attribution {
+@layer utilities {
+  .app-shell {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.014), transparent 28%),
+      rgba(5, 5, 7, 0.92);
+  }
+
+  .panel-border {
+    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  }
+
+  .graph-stage {
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.014), rgba(255, 255, 255, 0)),
+      radial-gradient(circle at center, rgba(113, 105, 255, 0.04), transparent 46%),
+      rgba(22, 22, 26, 0.9);
+  }
+
+  .soft-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+
+}
+
+.react-flow__attribution,
+.react-flow__controls,
+.react-flow__minimap {
   display: none;
+}
+
+.react-flow__renderer,
+.react-flow__pane {
+  background: transparent;
+}
+
+.react-flow__edge-path {
+  stroke: rgba(158, 148, 255, 0.24);
+  stroke-width: 1.2;
+}
+
+.react-flow__handle {
+  opacity: 1;
+}
+
+.react-flow__handle-connecting,
+.react-flow__handle-valid {
+  box-shadow: 0 0 0 6px rgba(130, 119, 255, 0.16);
+}
+
+.react-flow__node,
+.react-flow__node * {
+  transition-property: border-color, background-color, color, opacity, box-shadow, outline-color;
 }

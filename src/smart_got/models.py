@@ -18,6 +18,11 @@ class CheckState(str, Enum):
     checked = "checked"
 
 
+class LayoutMode(str, Enum):
+    auto = "auto"
+    manual = "manual"
+
+
 class SMARTFields(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -43,6 +48,8 @@ class BaselineQuestion(BaseModel):
     id: str
     question: str
     category: str
+    guide: str
+    research_basis: str
 
 
 class NodeBaseline(BaseModel):
@@ -82,6 +89,29 @@ class NodePlan(BaseModel):
         return data
 
 
+class NodePosition(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    x: float
+    y: float
+
+
+class NodeUI(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    layout_mode: LayoutMode = LayoutMode.auto
+    position: Optional[NodePosition] = None
+
+
+class SuggestedConnection(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    source_id: str
+    target_id: str
+    label: str = "AI path"
+    rationale: str = ""
+
+
 class Node(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
@@ -95,6 +125,9 @@ class Node(BaseModel):
     baseline: Optional[NodeBaseline] = None
     plan: Optional[NodePlan] = None
     status: NodeStatus = NodeStatus.DRAFT
+    ui: NodeUI = Field(default_factory=NodeUI)
+    suggested_parent_id: Optional[str] = None
+    suggested_path_ids: list[str] = Field(default_factory=list)
 
     @model_validator(mode="before")
     @classmethod
@@ -118,6 +151,8 @@ class Node(BaseModel):
                         )
                     )
             data["baseline"] = NodeBaseline(qa=qa_items)
+        if "ui" not in data or data["ui"] is None:
+            data["ui"] = NodeUI()
         return data
 
 
@@ -130,6 +165,7 @@ class Graph(BaseModel):
     updated_at: str
     focus_parent_id: str = ""
     active_layer: int = 0
+    suggested_connections: list[SuggestedConnection] = Field(default_factory=list)
 
     @model_validator(mode="after")
     def _ensure_focus_fields(self) -> "Graph":
@@ -138,6 +174,30 @@ class Graph(BaseModel):
         if self.active_layer <= 0:
             focus_node = self.nodes.get(self.focus_parent_id)
             self.active_layer = (focus_node.layer + 1) if focus_node else 1
+
+        for node in self.nodes.values():
+            if node.suggested_parent_id is None and node.parent_id is not None:
+                node.suggested_parent_id = node.parent_id
+            if not node.suggested_path_ids:
+                path_ids: list[str] = []
+                current_id: Optional[str] = node.id
+                visited: set[str] = set()
+                while current_id and current_id not in visited:
+                    visited.add(current_id)
+                    path_ids.append(current_id)
+                    if current_id in self.nodes:
+                        current_id = self.nodes[current_id].parent_id
+                    else:
+                        current_id = None
+                node.suggested_path_ids = list(reversed(path_ids))
+
+        self.suggested_connections = [
+            connection
+            for connection in self.suggested_connections
+            if connection.source_id in self.nodes
+            and connection.target_id in self.nodes
+            and connection.source_id != connection.target_id
+        ]
         return self
 
 
@@ -147,6 +207,7 @@ class ChildDraft(BaseModel):
     title: str
     workstream: str
     smart: SMARTFields
+    depends_on: list[str] = Field(default_factory=list)
 
 
 class UpdateNodeMutation(BaseModel):

@@ -1,4 +1,7 @@
 import {
+  BaselineQuestion,
+  BaselineQA,
+  GraphMutationAction,
   GraphResponse,
   JobAccepted,
   JobEvent,
@@ -33,6 +36,16 @@ export function fetchGraph(path: string) {
   return apiFetch<GraphResponse>(`/api/v1/graph?path=${encodeURIComponent(path)}`);
 }
 
+export function mutateGraph(path: string, mutation: GraphMutationAction) {
+  return apiFetch<GraphResponse>("/api/v1/graph/mutate", {
+    method: "POST",
+    body: JSON.stringify({
+      ...mutation,
+      path,
+    }),
+  });
+}
+
 export function initGraph(path: string, goal: string, overwrite = false) {
   return apiFetch<GraphResponse>("/api/v1/graph/init", {
     method: "POST",
@@ -55,9 +68,32 @@ export function fetchNode(nodeId: string, path: string) {
 }
 
 export function fetchBaselineQuestions(nodeId: string, path: string) {
-  return apiFetch<{ questions: Array<{ id: string; question: string; category: string }> }>(
+  return apiFetch<{ questions: BaselineQuestion[] }>(
     `/api/v1/baseline/questions?node_id=${encodeURIComponent(nodeId)}&path=${encodeURIComponent(path)}`
   );
+}
+
+export function buildLayer(
+  path: string,
+  parentId: string,
+  layerQaPairs: BaselineQA[],
+  options?: {
+    targetChildren?: number;
+    minChildren?: number;
+    maxChildren?: number;
+  }
+) {
+  return apiFetch<JobAccepted>("/api/v1/jobs/layer-build", {
+    method: "POST",
+    body: JSON.stringify({
+      path,
+      parent_id: parentId,
+      layer_qa_pairs: layerQaPairs,
+      target_children: options?.targetChildren ?? 7,
+      min_children: options?.minChildren ?? 5,
+      max_children: options?.maxChildren ?? 9,
+    }),
+  });
 }
 
 export function postJob(endpoint: string, body: unknown) {

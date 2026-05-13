@@ -1,6 +1,8 @@
 from __future__ import annotations
 
+import asyncio
 import json
+import os
 from pathlib import Path
 from typing import Any, Awaitable, Callable
 
@@ -16,8 +18,9 @@ from apps.api.types import (
     DecomposeRequest,
     FocusRequest,
     GraphInitRequest,
+    GraphMutationRequest,
     JobAccepted,
-    JobStatus,
+    LayerBuildRequest,
     NodeAddRequest,
     NodeDeleteRequest,
     NodeUpdateRequest,
@@ -31,9 +34,44 @@ from smart_got import engine
 from smart_got.llm import get_provider
 from smart_got.store import load_graph, save_graph
 
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _parse_env_line(line: str) -> tuple[str, str] | None:
+    stripped = line.strip()
+    if not stripped or stripped.startswith("#"):
+        return None
+    if stripped.startswith("export "):
+        stripped = stripped[len("export ") :].lstrip()
+    if "=" not in stripped:
+        return None
+    key, value = stripped.split("=", 1)
+    key = key.strip()
+    if not key:
+        return None
+    value = value.strip()
+    if len(value) >= 2 and value[0] == value[-1] and value[0] in {'"', "'"}:
+        value = value[1:-1]
+    return key, value
+
+
+def _load_repo_env(project_root: Path = PROJECT_ROOT) -> None:
+    for filename in (".env", ".env.local"):
+        env_path = project_root / filename
+        if not env_path.exists():
+            continue
+        for raw_line in env_path.read_text().splitlines():
+            parsed = _parse_env_line(raw_line)
+            if parsed is None:
+                continue
+            key, value = parsed
+            os.environ.setdefault(key, value)
+
+
+_load_repo_env()
+
 app = FastAPI(title="SMART-GoT Sidecar API", version="0.1.0")
 registry = JobRegistry()
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 app.add_middleware(
     CORSMiddleware,
@@ -65,7 +103,7 @@ def _load_graph_or_error(path: str):
             status_code=404,
             detail=(
                 f"Graph file not found at '{path_obj}'. Create it with "
-                "`smartgot run --goal \"...\"` first."
+                "`POST /api/v1/graph/init` first."
             ),
         )
     try:
@@ -78,7 +116,67 @@ def _graph_payload(graph) -> dict[str, Any]:
     return {
         "graph": graph.model_dump(mode="json"),
         "node_progress": engine.graph_progress(graph),
+        "workflow": engine.workflow_snapshot(graph),
     }
+
+
+async def _emit_graph_progress(
+    progress,
+    message: str,
+    before_graph,
+    after_graph,
+    *,
+    changed_node_ids: list[str] | None = None,
+) -> None:
+    await progress(
+        message,
+        changed_node_ids=changed_node_ids or engine.changed_node_ids(before_graph, after_graph),
+        graph_snapshot=_graph_payload(after_graph),
+    )
+
+
+async def _stream_draft_children(
+    progress,
+    graph,
+    parent_id: str,
+    drafts,
+    path: str,
+) -> tuple[Any, list[str]]:
+    child_ids: list[str] = []
+    for draft in drafts:
+        before_graph = graph
+        graph, node_id = await asyncio.to_thread(
+            engine.add_node,
+            graph,
+            parent_id,
+            draft.title,
+            draft.workstream,
+            draft.smart,
+            engine.NodeStatus.DRAFT,
+        )
+        child_ids.append(node_id)
+        graph = await asyncio.to_thread(
+            engine.sync_suggested_connections_for_drafts,
+            graph,
+            drafts,
+            child_ids,
+        )
+        await asyncio.to_thread(save_graph, graph, _resolve_graph_path(path))
+        await _emit_graph_progress(
+            progress,
+            f"created node {node_id}",
+            before_graph,
+            graph,
+            changed_node_ids=[node_id],
+        )
+    return graph, child_ids
+
+
+def _get_provider_or_http_error():
+    try:
+        return get_provider()
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
 
 
 async def _submit_graph_job(kind: str, operation: JobOperation) -> JobAccepted:
@@ -104,8 +202,7 @@ def init_graph(request: GraphInitRequest) -> dict[str, Any]:
         raise HTTPException(
             status_code=409,
             detail=(
-                f"Graph file already exists at '{path_obj}'. "
-                "Set overwrite=true to replace it."
+                f"Graph file already exists at '{path_obj}'. Set overwrite=true to replace it."
             ),
         )
     graph = engine.init_graph(request.goal.strip())
@@ -140,31 +237,114 @@ def get_baseline_questions(node_id: str, path: str = Query(DEFAULT_GRAPH_PATH)) 
     node = graph.nodes.get(node_id)
     if node is None:
         raise HTTPException(status_code=404, detail=f"Node not found: {node_id}")
-    provider = get_provider()
-    context = engine.build_context(graph, node_id)
-    questions = provider.baseline_questions(node, context)
+    try:
+        provider = _get_provider_or_http_error()
+        context = engine.build_context(graph, node_id)
+        questions = provider.baseline_questions(node, context)
+    except HTTPException:
+        raise
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     return {"node_id": node_id, "questions": [item.model_dump(mode="json") for item in questions]}
 
 
 @app.post("/api/v1/jobs/decompose", response_model=JobAccepted)
 async def job_decompose(request: DecomposeRequest) -> JobAccepted:
     async def operation(progress):
+        provider = get_provider()
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"decomposing node {request.node_id}")
-        updated_graph, new_ids = engine.decompose_node(
+        drafts = await asyncio.to_thread(
+            engine.draft_children_for_node,
             graph,
             request.node_id,
-            get_provider(),
+            provider,
             target_children=request.target_children,
             min_children=request.min_children,
             max_children=request.max_children,
         )
-        await progress(f"created {len(new_ids)} child nodes")
-        save_graph(updated_graph, _resolve_graph_path(request.path))
-        return updated_graph.updated_at
+        graph, _ = await _stream_draft_children(
+            progress,
+            graph,
+            request.node_id,
+            drafts,
+            request.path,
+        )
+        return graph.updated_at
 
     return await _submit_graph_job("decompose", operation)
+
+
+@app.post("/api/v1/jobs/layer-build", response_model=JobAccepted)
+async def job_layer_build(request: LayerBuildRequest) -> JobAccepted:
+    async def operation(progress):
+        provider = get_provider()
+        await progress("loading graph")
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
+        await progress(f"building layer for parent {request.parent_id}")
+        if not engine.layer_children(graph, request.parent_id):
+            drafts = await asyncio.to_thread(
+                engine.draft_children_for_node,
+                graph,
+                request.parent_id,
+                provider,
+                target_children=request.target_children,
+                min_children=request.min_children,
+                max_children=request.max_children,
+            )
+            graph, _ = await _stream_draft_children(
+                progress,
+                graph,
+                request.parent_id,
+                drafts,
+                request.path,
+            )
+
+        draft_ids = engine.layer_draft_ids(graph, request.parent_id)
+        if draft_ids:
+            await progress(f"applying layer baseline to {len(draft_ids)} nodes")
+        for child_id in draft_ids:
+            node = graph.nodes[child_id]
+            context = engine.build_context(graph, child_id)
+            node_questions = provider.baseline_questions(node, context)
+            qa_pairs = engine.map_layer_answers_to_node(request.layer_qa_pairs, node_questions)
+            before_graph = graph
+            graph, _ = await asyncio.to_thread(
+                engine.apply_baseline_answers,
+                graph,
+                child_id,
+                provider,
+                qa_pairs,
+            )
+            await asyncio.to_thread(save_graph, graph, _resolve_graph_path(request.path))
+            await _emit_graph_progress(
+                progress,
+                f"baselined node {child_id}",
+                before_graph,
+                graph,
+                changed_node_ids=engine.changed_node_ids(before_graph, graph),
+            )
+
+        pending_ids = engine.layer_pending_plan_ids(graph, request.parent_id)
+        if pending_ids:
+            await progress(f"planning {len(pending_ids)} nodes")
+        for child_id in pending_ids:
+            before_graph = graph
+            graph = await asyncio.to_thread(engine.plan_node, graph, child_id, provider)
+            await asyncio.to_thread(save_graph, graph, _resolve_graph_path(request.path))
+            await _emit_graph_progress(
+                progress,
+                f"planned node {child_id}",
+                before_graph,
+                graph,
+                changed_node_ids=[child_id],
+            )
+        return graph.updated_at
+
+    return await _submit_graph_job("layer-build", operation)
 
 
 @app.post("/api/v1/jobs/baseline-apply", response_model=JobAccepted)
@@ -173,20 +353,30 @@ async def job_baseline_apply(request: BaselineApplyRequest) -> JobAccepted:
         if not request.qa_pairs and request.baseline is None:
             raise ValueError("baseline apply requires qa_pairs and/or baseline payload")
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"applying baseline to {request.node_id}")
-        updated_graph = engine.apply_baseline(
-            graph,
-            request.node_id,
-            request.qa_pairs,
-            smart_patch=request.smart_patch,
-            baseline=request.baseline,
-            baseline_notes=request.baseline_notes,
-            assumptions=request.assumptions,
-            constraints=request.constraints,
-            unknowns=request.unknowns,
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(
+            lambda: engine.apply_baseline(
+                graph,
+                request.node_id,
+                request.qa_pairs,
+                smart_patch=request.smart_patch,
+                baseline=request.baseline,
+                baseline_notes=request.baseline_notes,
+                assumptions=request.assumptions,
+                constraints=request.constraints,
+                unknowns=request.unknowns,
+            )
         )
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"updated node {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=engine.changed_node_ids(before_graph, updated_graph),
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("baseline-apply", operation)
@@ -195,11 +385,20 @@ async def job_baseline_apply(request: BaselineApplyRequest) -> JobAccepted:
 @app.post("/api/v1/jobs/plan-generate", response_model=JobAccepted)
 async def job_plan_generate(request: PlanGenerateRequest) -> JobAccepted:
     async def operation(progress):
+        provider = get_provider()
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"generating plan for {request.node_id}")
-        updated_graph = engine.plan_node(graph, request.node_id, get_provider())
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(engine.plan_node, graph, request.node_id, provider)
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"planned node {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[request.node_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("plan-generate", operation)
@@ -209,16 +408,26 @@ async def job_plan_generate(request: PlanGenerateRequest) -> JobAccepted:
 async def job_node_update(request: NodeUpdateRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"updating node {request.node_id}")
-        updated_graph = engine.update_node(
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(
+            engine.update_node,
             graph,
-            node_id=request.node_id,
-            title=request.title,
-            workstream=request.workstream,
-            smart_patch=request.smart_patch,
+            request.node_id,
+            request.title,
+            request.workstream,
+            None,
+            request.smart_patch,
         )
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"updated node {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[request.node_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("node-update", operation)
@@ -228,17 +437,25 @@ async def job_node_update(request: NodeUpdateRequest) -> JobAccepted:
 async def job_node_add(request: NodeAddRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"adding node under {request.parent_id}")
-        updated_graph, new_id = engine.add_node(
+        before_graph = graph
+        updated_graph, new_id = await asyncio.to_thread(
+            engine.add_node,
             graph,
-            parent_id=request.parent_id,
-            title=request.title,
-            workstream=request.workstream,
-            smart=request.smart,
+            request.parent_id,
+            request.title,
+            request.workstream,
+            request.smart,
         )
-        await progress(f"created node {new_id}")
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"created node {new_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[new_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("node-add", operation)
@@ -248,10 +465,18 @@ async def job_node_add(request: NodeAddRequest) -> JobAccepted:
 async def job_node_delete(request: NodeDeleteRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
         await progress(f"deleting node {request.node_id}")
-        updated_graph = engine.delete_node(graph, request.node_id)
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(engine.delete_node, graph, request.node_id)
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"deleted node {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=engine.changed_node_ids(before_graph, updated_graph),
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("node-delete", operation)
@@ -261,17 +486,26 @@ async def job_node_delete(request: NodeDeleteRequest) -> JobAccepted:
 async def job_plan_replace(request: PlanReplaceRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
-        errors = engine.validate_plan_replacement(request.tasks)
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
+        errors = await asyncio.to_thread(engine.validate_plan_replacement, request.tasks)
         if errors:
             raise ValueError("; ".join(errors))
         await progress(f"replacing plan for {request.node_id}")
-        updated_graph = engine.replace_plan(
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(
+            engine.replace_plan,
             graph,
-            node_id=request.node_id,
-            tasks=request.tasks,
+            request.node_id,
+            request.tasks,
         )
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"updated plan for {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[request.node_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("plan-replace", operation)
@@ -281,16 +515,23 @@ async def job_plan_replace(request: PlanReplaceRequest) -> JobAccepted:
 async def job_subgoal_toggle(request: SubgoalToggleRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
-        await progress(
-            f"setting all tasks on {request.node_id} to completed={request.completed}"
-        )
-        updated_graph = engine.toggle_subgoal_completion(
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
+        await progress(f"setting all tasks on {request.node_id} to completed={request.completed}")
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(
+            engine.toggle_subgoal_completion,
             graph,
-            node_id=request.node_id,
-            completed=request.completed,
+            request.node_id,
+            request.completed,
         )
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"updated tasks for {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[request.node_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("subgoal-toggle", operation)
@@ -300,17 +541,28 @@ async def job_subgoal_toggle(request: SubgoalToggleRequest) -> JobAccepted:
 async def job_task_toggle(request: TaskToggleRequest) -> JobAccepted:
     async def operation(progress):
         await progress("loading graph")
-        graph = _load_graph_or_error(request.path)
-        await progress(
-            f"setting task index {request.task_index} on {request.node_id} to completed={request.completed}"
+        graph = await asyncio.to_thread(_load_graph_or_error, request.path)
+        message = (
+            f"setting task index {request.task_index} on "
+            f"{request.node_id} to completed={request.completed}"
         )
-        updated_graph = engine.toggle_task_completion(
+        await progress(message)
+        before_graph = graph
+        updated_graph = await asyncio.to_thread(
+            engine.toggle_task_completion,
             graph,
-            node_id=request.node_id,
-            task_index=request.task_index,
-            completed=request.completed,
+            request.node_id,
+            request.task_index,
+            request.completed,
         )
-        save_graph(updated_graph, _resolve_graph_path(request.path))
+        await asyncio.to_thread(save_graph, updated_graph, _resolve_graph_path(request.path))
+        await _emit_graph_progress(
+            progress,
+            f"updated task {request.task_index} for {request.node_id}",
+            before_graph,
+            updated_graph,
+            changed_node_ids=[request.node_id],
+        )
         return updated_graph.updated_at
 
     return await _submit_graph_job("task-toggle", operation)
@@ -330,6 +582,75 @@ def update_focus(request: FocusRequest) -> dict[str, Any]:
         "active_layer": updated_graph.active_layer,
         "updated_at": updated_graph.updated_at,
     }
+
+
+@app.post("/api/v1/graph/mutate")
+def mutate_graph(request: GraphMutationRequest) -> dict[str, Any]:
+    graph = _load_graph_or_error(request.path)
+
+    if request.action == "create_node":
+        updated_graph, node_id = engine.add_node(
+            graph,
+            parent_id=request.parent_id or graph.root_id,
+            title=(request.title or "").strip(),
+            workstream=request.workstream or "General",
+            smart=request.smart or engine.SMARTFields(),
+            status=request.status or engine.NodeStatus.BASELINED,
+            baseline=request.baseline,
+        )
+        if request.position is not None or request.layout_mode is not None:
+            updated_graph = engine.set_node_position(
+                updated_graph,
+                node_id,
+                request.position,
+                request.layout_mode,
+            )
+    elif request.action == "update_node":
+        updated_graph = engine.update_node(
+            graph,
+            request.node_id or "",
+            title=request.title,
+            workstream=request.workstream,
+            smart=request.smart,
+            baseline=request.baseline,
+            baseline_notes=request.baseline_notes,
+            assumptions=request.assumptions,
+            constraints=request.constraints,
+            unknowns=request.unknowns,
+            status=request.status,
+        )
+    elif request.action == "move_node":
+        updated_graph = engine.move_node(
+            graph,
+            request.node_id or "",
+            request.parent_id or "",
+        )
+    elif request.action == "delete_node":
+        updated_graph = engine.delete_node(graph, request.node_id or "")
+    elif request.action == "upsert_suggested_connection":
+        updated_graph = engine.upsert_suggested_connection(
+            graph,
+            request.source_id or "",
+            request.target_id or "",
+            label=request.label or "",
+            rationale=request.rationale or "",
+        )
+    elif request.action == "delete_suggested_connection":
+        updated_graph = engine.delete_suggested_connection(
+            graph,
+            request.source_id or "",
+            request.target_id or "",
+        )
+    else:
+        updated_graph = engine.set_node_position(
+            graph,
+            request.node_id or "",
+            request.position,
+            request.layout_mode,
+        )
+
+    save_graph(updated_graph, _resolve_graph_path(request.path))
+    return _graph_payload(updated_graph)
 
 
 @app.get("/api/v1/jobs/{job_id}")

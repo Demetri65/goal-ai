@@ -6,6 +6,7 @@ from smart_got import engine
 from smart_got.llm import MockProvider
 from smart_got.models import (
     AddSiblingMutation,
+    ChildDraft,
     DeleteNodeMutation,
     Node,
     NodeStatus,
@@ -31,17 +32,17 @@ class FakeAskFn:
     @staticmethod
     def _category_for_question(question_text: str) -> str:
         q = question_text.lower()
-        if "hours/week" in q or "commit each week" in q:
+        if "hours/week" in q or "hours per week" in q or "commit each week" in q:
             return "achievable"
-        if "target date" in q or "deadline" in q or "checkpoint cadence" in q:
+        if "target date" in q or "deadline" in q or "checkpoint cadence" in q or "what date" in q:
             return "time_bound"
-        if "what resources" in q:
+        if "resource" in q:
             return "resources"
-        if "constraints" in q or "dependencies" in q:
+        if "constraints" in q or "dependencies" in q or "dependency" in q:
             return "constraints"
-        if "risks" in q or "unknowns" in q:
+        if "risks" in q or "unknowns" in q or "uncertainty" in q:
             return "unknowns"
-        if "concrete output" in q or "achievable in this phase" in q:
+        if "concrete output" in q or "achievable in this phase" in q or "evidence proves" in q:
             return "assumptions"
         return "default"
 
@@ -84,6 +85,151 @@ def test_decompose_children_quality_and_title_guards():
         assert not child.title.lower().startswith("design ")
         assert not child.title.lower().startswith("deliver ")
 
+    title_by_id = {child_id: graph.nodes[child_id].title for child_id in child_ids}
+    connection_pairs = {
+        (title_by_id[item.source_id], title_by_id[item.target_id])
+        for item in graph.suggested_connections
+    }
+    assert ("Define Scope and Success", "Plan Resource Coverage") in connection_pairs
+    assert ("Build Timeline", "Prepare Operations Logistics") in connection_pairs
+
+
+def test_decompose_ignores_invalid_dependency_titles():
+    class InvalidDependencyProvider(MockProvider):
+        def decompose(self, node, context, target_children, min_children, max_children):
+            del context, target_children, min_children, max_children
+            return [
+                ChildDraft(
+                    title="Start Work",
+                    workstream="Start",
+                    depends_on=["Missing Work"],
+                    smart=SMARTFields(
+                        specific=f"Start work for {node.title}",
+                        measurable="Start complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+                ChildDraft(
+                    title="Finish Work",
+                    workstream="Finish",
+                    depends_on=["Start Work", "Finish Work"],
+                    smart=SMARTFields(
+                        specific=f"Finish work for {node.title}",
+                        measurable="Finish complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+            ]
+
+    graph = engine.init_graph("Launch pilot")
+    graph, child_ids = engine.decompose_node(
+        graph,
+        graph.root_id,
+        InvalidDependencyProvider(),
+        target_children=2,
+        min_children=2,
+        max_children=2,
+    )
+
+    assert len(graph.suggested_connections) == 1
+    connection = graph.suggested_connections[0]
+    assert connection.source_id == child_ids[0]
+    assert connection.target_id == child_ids[1]
+
+
+def test_decompose_adds_transitive_dependency_connections():
+    class ChainedDependencyProvider(MockProvider):
+        def decompose(self, node, context, target_children, min_children, max_children):
+            del context, target_children, min_children, max_children
+            return [
+                ChildDraft(
+                    title="Scope Work",
+                    workstream="Scope",
+                    smart=SMARTFields(
+                        specific=f"Scope work for {node.title}",
+                        measurable="Scope complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+                ChildDraft(
+                    title="Build Work",
+                    workstream="Build",
+                    depends_on=["Scope Work"],
+                    smart=SMARTFields(
+                        specific=f"Build work for {node.title}",
+                        measurable="Build complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+                ChildDraft(
+                    title="Launch Work",
+                    workstream="Launch",
+                    depends_on=["Build Work"],
+                    smart=SMARTFields(
+                        specific=f"Launch work for {node.title}",
+                        measurable="Launch complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+            ]
+
+    graph = engine.init_graph("Launch pilot")
+    graph, child_ids = engine.decompose_node(
+        graph,
+        graph.root_id,
+        ChainedDependencyProvider(),
+        target_children=3,
+        min_children=3,
+        max_children=3,
+    )
+
+    connection_pairs = {
+        (connection.source_id, connection.target_id)
+        for connection in graph.suggested_connections
+    }
+    assert (child_ids[0], child_ids[1]) in connection_pairs
+    assert (child_ids[1], child_ids[2]) in connection_pairs
+    assert (child_ids[0], child_ids[2]) in connection_pairs
+
+
+def test_decompose_ignores_backward_dependency_connections():
+    class BackwardDependencyProvider(MockProvider):
+        def decompose(self, node, context, target_children, min_children, max_children):
+            del context, target_children, min_children, max_children
+            return [
+                ChildDraft(
+                    title="First Work",
+                    workstream="First",
+                    depends_on=["Second Work"],
+                    smart=SMARTFields(
+                        specific=f"First work for {node.title}",
+                        measurable="First complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+                ChildDraft(
+                    title="Second Work",
+                    workstream="Second",
+                    smart=SMARTFields(
+                        specific=f"Second work for {node.title}",
+                        measurable="Second complete",
+                        relevant=f"Supports {node.title}",
+                    ),
+                ),
+            ]
+
+    graph = engine.init_graph("Launch pilot")
+    graph, _ = engine.decompose_node(
+        graph,
+        graph.root_id,
+        BackwardDependencyProvider(),
+        target_children=2,
+        min_children=2,
+        max_children=2,
+    )
+
+    assert graph.suggested_connections == []
+
 
 def test_baseline_interview_updates_achievable_and_timebound():
     provider = MockProvider()
@@ -115,6 +261,67 @@ def test_plan_node_has_relative_timing_and_due_for_mock():
     for task in node.plan.tasks:
         assert task.relative_timing
         assert task.due is not None
+
+
+def test_build_layer_decomposes_baselines_and_plans_children():
+    provider = MockProvider()
+    graph = engine.init_graph("Launch pilot")
+    questions = engine.layer_baseline_questions(graph, graph.root_id, provider)
+    answers = engine.collect_baseline_answers(questions, FakeAskFn())
+
+    updated, summary = engine.build_layer(
+        graph,
+        graph.root_id,
+        provider,
+        answers,
+        target_children=7,
+        min_children=5,
+        max_children=9,
+    )
+
+    assert summary["decomposed"] is True
+    assert summary["baselined_ids"]
+    assert summary["planned_ids"]
+    assert engine.layer_is_complete(updated, updated.root_id)
+    assert all(
+        updated.nodes[child_id].status == NodeStatus.PLANNED
+        for child_id in updated.nodes[updated.root_id].children_ids
+    )
+    assert updated.suggested_connections
+    assert all(
+        connection.source_id in updated.nodes and connection.target_id in updated.nodes
+        for connection in updated.suggested_connections
+    )
+
+
+def test_build_layer_skips_duplicate_decomposition_for_existing_children():
+    provider = MockProvider()
+    graph = engine.init_graph("Launch pilot")
+    graph, child_ids = engine.decompose_node(
+        graph,
+        graph.root_id,
+        provider,
+        target_children=7,
+        min_children=5,
+        max_children=9,
+    )
+    questions = engine.layer_baseline_questions(graph, graph.root_id, provider)
+    answers = engine.collect_baseline_answers(questions, FakeAskFn())
+
+    updated, summary = engine.build_layer(
+        graph,
+        graph.root_id,
+        provider,
+        answers,
+        target_children=7,
+        min_children=5,
+        max_children=9,
+    )
+
+    assert summary["decomposed"] is False
+    assert summary["child_ids"] == child_ids
+    assert len(summary["baselined_ids"]) == len(child_ids)
+    assert engine.layer_is_complete(updated, updated.root_id)
 
 
 def test_layer_mutation_safety():

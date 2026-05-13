@@ -2,38 +2,62 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass, field
-from typing import Awaitable, Callable, Optional
+from threading import Lock, Thread
+from typing import Any, Awaitable, Callable, Optional
 from uuid import uuid4
 
 from apps.api.types import JobEvent, JobRecord, JobStatus, now_iso
 
-ProgressFn = Callable[[str], Awaitable[None]]
+ProgressFn = Callable[..., Awaitable[None]]
 JobOp = Callable[[ProgressFn], Awaitable[Optional[str]]]
+
+
+@dataclass
+class _Subscriber:
+    queue: asyncio.Queue[JobEvent]
+    loop: asyncio.AbstractEventLoop
 
 
 @dataclass
 class _JobState:
     record: JobRecord
     events: list[JobEvent] = field(default_factory=list)
-    subscribers: list[asyncio.Queue[JobEvent]] = field(default_factory=list)
+    subscribers: list[_Subscriber] = field(default_factory=list)
+    next_sequence: int = 1
 
 
 class JobRegistry:
     def __init__(self) -> None:
         self._jobs: dict[str, _JobState] = {}
-        self._lock = asyncio.Lock()
+        self._lock = Lock()
 
-    async def _broadcast(self, state: _JobState, event: JobEvent) -> None:
+    def _broadcast_locked(self, state: _JobState, event: JobEvent) -> None:
         state.events.append(event)
-        for queue in list(state.subscribers):
-            try:
-                queue.put_nowait(event)
-            except asyncio.QueueFull:
-                # Drop event for a saturated subscriber; terminal event is still persisted.
-                continue
+        for subscriber in list(state.subscribers):
+            event_copy = event.model_copy(deep=True)
 
-    async def _emit(self, job_id: str, event_type: str, status: JobStatus, message: str) -> None:
-        async with self._lock:
+            def enqueue() -> None:
+                try:
+                    subscriber.queue.put_nowait(event_copy)
+                except asyncio.QueueFull:
+                    pass
+
+            try:
+                subscriber.loop.call_soon_threadsafe(enqueue)
+            except RuntimeError:
+                state.subscribers = [item for item in state.subscribers if item is not subscriber]
+
+    def _emit(
+        self,
+        job_id: str,
+        event_type: str,
+        status: JobStatus,
+        message: str,
+        *,
+        changed_node_ids: Optional[list[str]] = None,
+        graph_snapshot: Optional[dict[str, Any]] = None,
+    ) -> None:
+        with self._lock:
             state = self._jobs.get(job_id)
             if state is None:
                 return
@@ -42,34 +66,51 @@ class JobRegistry:
                 type=event_type,
                 status=status,
                 message=message,
+                sequence=state.next_sequence,
+                changed_node_ids=changed_node_ids or [],
+                graph_snapshot=graph_snapshot,
             )
-            await self._broadcast(state, event)
+            state.next_sequence += 1
+            self._broadcast_locked(state, event)
 
-    async def _run_job(self, job_id: str, kind: str, operation: JobOp) -> None:
-        async with self._lock:
+    def _run_job(self, job_id: str, kind: str, operation: JobOp) -> None:
+        with self._lock:
             state = self._jobs[job_id]
             state.record.status = JobStatus.running
             state.record.started_at = now_iso()
-        await self._emit(job_id, "running", JobStatus.running, f"{kind} started")
+        self._emit(job_id, "running", JobStatus.running, f"{kind} started")
 
-        async def progress(message: str) -> None:
-            await self._emit(job_id, "progress", JobStatus.running, message)
+        async def progress(
+            message: str,
+            *,
+            changed_node_ids: Optional[list[str]] = None,
+            graph_snapshot: Optional[dict[str, Any]] = None,
+            event_type: str = "progress",
+        ) -> None:
+            self._emit(
+                job_id,
+                event_type,
+                JobStatus.running,
+                message,
+                changed_node_ids=changed_node_ids,
+                graph_snapshot=graph_snapshot,
+            )
 
         try:
-            graph_updated_at = await operation(progress)
-            async with self._lock:
+            graph_updated_at = asyncio.run(operation(progress))
+            with self._lock:
                 state = self._jobs[job_id]
                 state.record.status = JobStatus.succeeded
                 state.record.finished_at = now_iso()
                 state.record.graph_updated_at = graph_updated_at
-            await self._emit(job_id, "completed", JobStatus.succeeded, f"{kind} completed")
+            self._emit(job_id, "completed", JobStatus.succeeded, f"{kind} completed")
         except Exception as exc:  # pragma: no cover - exercised in API tests
-            async with self._lock:
+            with self._lock:
                 state = self._jobs[job_id]
                 state.record.status = JobStatus.failed
                 state.record.finished_at = now_iso()
                 state.record.error = str(exc)
-            await self._emit(job_id, "failed", JobStatus.failed, str(exc))
+            self._emit(job_id, "failed", JobStatus.failed, str(exc))
 
     async def submit(self, kind: str, operation: JobOp) -> JobRecord:
         job_id = str(uuid4())
@@ -79,22 +120,20 @@ class JobRegistry:
             status=JobStatus.queued,
         )
         state = _JobState(record=record)
-        queued_event = JobEvent(
-            job_id=job_id,
-            type="queued",
-            status=JobStatus.queued,
-            message=f"{kind} queued",
-        )
 
-        async with self._lock:
+        with self._lock:
             self._jobs[job_id] = state
-            await self._broadcast(state, queued_event)
+        self._emit(job_id, "queued", JobStatus.queued, f"{kind} queued")
 
-        asyncio.create_task(self._run_job(job_id, kind, operation))
+        Thread(
+            target=self._run_job,
+            args=(job_id, kind, operation),
+            daemon=True,
+        ).start()
         return record.model_copy(deep=True)
 
     async def get(self, job_id: str) -> JobRecord:
-        async with self._lock:
+        with self._lock:
             state = self._jobs.get(job_id)
             if state is None:
                 raise KeyError(job_id)
@@ -102,12 +141,14 @@ class JobRegistry:
 
     async def iter_events(self, job_id: str):
         queue: asyncio.Queue[JobEvent] = asyncio.Queue(maxsize=128)
-        async with self._lock:
+        loop = asyncio.get_running_loop()
+        with self._lock:
             state = self._jobs.get(job_id)
             if state is None:
                 raise KeyError(job_id)
             snapshot = [event.model_copy(deep=True) for event in state.events]
-            state.subscribers.append(queue)
+            subscriber = _Subscriber(queue=queue, loop=loop)
+            state.subscribers.append(subscriber)
 
         try:
             for event in snapshot:
@@ -120,11 +161,12 @@ class JobRegistry:
                 try:
                     event = await asyncio.wait_for(queue.get(), timeout=15)
                     yield event
-                except TimeoutError:
-                    # Keep-alive ping support.
+                except asyncio.TimeoutError:
                     continue
         finally:
-            async with self._lock:
+            with self._lock:
                 state = self._jobs.get(job_id)
                 if state is not None:
-                    state.subscribers = [item for item in state.subscribers if item is not queue]
+                    state.subscribers = [
+                        item for item in state.subscribers if item is not subscriber
+                    ]

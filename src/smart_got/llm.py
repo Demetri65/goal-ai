@@ -19,6 +19,7 @@ from smart_got.models import (
 )
 
 ProviderContext = str
+OPENAI_TOKEN_MISSING_MESSAGE = "OpenAI generation is unavailable: OPENAI_API_KEY is not configured."
 
 
 class LLMProvider(Protocol):
@@ -50,15 +51,55 @@ class LLMProvider(Protocol):
 
 class MockProvider:
     _workstreams = [
-        ("Scope", "Define Scope and Success", "Define acceptance criteria for this workstream"),
-        ("Resources", "Plan Resource Coverage", "Confirm staffing, budget, and tooling coverage"),
-        ("Stakeholders", "Align Stakeholder Owners", "Secure owner sign-off on priorities"),
-        ("Timeline", "Build Timeline", "Publish sequenced execution checkpoints"),
-        ("Operations", "Prepare Operations Logistics", "Document operational handoffs and dependencies"),
-        ("Risk", "Manage Risk and Compliance", "List top risks with assigned mitigations"),
-        ("Communications", "Set Communication Plan", "Set communication cadence and update channels"),
-        ("Metrics", "Define Measurement Reporting", "Define KPI tracking and reporting rhythm"),
-        ("Readiness", "Confirm Execution Readiness", "Validate prerequisites before launch"),
+        ("Scope", "Define Scope and Success", "Define acceptance criteria for this workstream", []),
+        (
+            "Resources",
+            "Plan Resource Coverage",
+            "Confirm staffing, budget, and tooling coverage",
+            ["Define Scope and Success"],
+        ),
+        (
+            "Stakeholders",
+            "Align Stakeholder Owners",
+            "Secure owner sign-off on priorities",
+            ["Define Scope and Success"],
+        ),
+        (
+            "Timeline",
+            "Build Timeline",
+            "Publish sequenced execution checkpoints",
+            ["Define Scope and Success", "Plan Resource Coverage"],
+        ),
+        (
+            "Operations",
+            "Prepare Operations Logistics",
+            "Document operational handoffs and dependencies",
+            ["Build Timeline", "Plan Resource Coverage"],
+        ),
+        (
+            "Risk",
+            "Manage Risk and Compliance",
+            "List top risks with assigned mitigations",
+            ["Define Scope and Success"],
+        ),
+        (
+            "Communications",
+            "Set Communication Plan",
+            "Set communication cadence and update channels",
+            ["Align Stakeholder Owners"],
+        ),
+        (
+            "Metrics",
+            "Define Measurement Reporting",
+            "Define KPI tracking and reporting rhythm",
+            ["Define Scope and Success"],
+        ),
+        (
+            "Readiness",
+            "Confirm Execution Readiness",
+            "Validate prerequisites before launch",
+            ["Prepare Operations Logistics", "Manage Risk and Compliance"],
+        ),
     ]
 
     @staticmethod
@@ -92,7 +133,7 @@ class MockProvider:
         del context
         count = max(min_children, min(target_children, max_children))
         drafts: list[ChildDraft] = []
-        for workstream, title, measurable in self._workstreams:
+        for workstream, title, measurable, depends_on in self._workstreams:
             if len(drafts) >= count:
                 break
             specific = f"{title} for {node.title}"
@@ -100,6 +141,7 @@ class MockProvider:
                 ChildDraft(
                     title=title,
                     workstream=workstream,
+                    depends_on=depends_on,
                     smart=SMARTFields(
                         specific=specific,
                         measurable=measurable,
@@ -121,6 +163,7 @@ class MockProvider:
                 ChildDraft(
                     title=title,
                     workstream=workstream,
+                    depends_on=[drafts[-1].title] if drafts else [],
                     smart=SMARTFields(
                         specific=f"{title} for {node.title}",
                         measurable=f"Define measurable output for {title}",
@@ -248,6 +291,6 @@ def get_provider() -> LLMProvider:
     api_key = os.getenv("OPENAI_API_KEY", "").strip()
     if mode == "mock":
         return MockProvider()
-    if api_key:
-        return OpenAIProvider(api_key)
-    return MockProvider()
+    if not api_key:
+        raise RuntimeError(OPENAI_TOKEN_MISSING_MESSAGE)
+    return OpenAIProvider(api_key)

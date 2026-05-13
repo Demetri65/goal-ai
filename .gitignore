@@ -15,6 +15,9 @@ build/
 .coverage
 .DS_Store
 *.log
+node_modules/
+.turbo/
+pnpm-debug.log*
 apps/web/.next/
 apps/web/node_modules/
 apps/web/.turbo/

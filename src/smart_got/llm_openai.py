@@ -42,8 +42,7 @@ class OpenAIProvider:
             from openai import OpenAI  # type: ignore
         except ImportError as exc:  # pragma: no cover - only happens when package missing
             raise RuntimeError(
-                "OpenAI SDK is not installed. Install the `openai` package or set "
-                "SMARTGOT_LLM_MODE=mock."
+                "OpenAI generation is unavailable: the `openai` package is not installed."
             ) from exc
         self._client = OpenAI(api_key=self.api_key)
         return self._client
@@ -160,53 +159,47 @@ class OpenAIProvider:
                 ChildDraft(
                     title=title,
                     workstream=workstream,
+                    depends_on=[
+                        OpenAIProvider._normalize_node_text(dependency)
+                        for dependency in child.depends_on
+                        if dependency.strip()
+                    ],
                     smart=smart,
                 )
             )
-
-        fallback = [
-            ("Scope", "Define Scope and Success"),
-            ("Resources", "Plan Resource Coverage"),
-            ("Timeline", "Build Timeline"),
-            ("Risk", "Manage Risk and Compliance"),
-            ("Operations", "Prepare Operations Logistics"),
-            ("Stakeholders", "Align Stakeholder Owners"),
-            ("Communications", "Set Communication Plan"),
-        ]
-        idx = 0
-        while len(cleaned) < min_children and idx < len(fallback):
-            workstream, title = fallback[idx]
-            idx += 1
-            key = (title.lower(), workstream.lower())
-            if key in seen:
-                continue
-            seen.add(key)
-            cleaned.append(
-                ChildDraft(
-                    title=title,
-                    workstream=workstream,
-                    smart=SMARTFields(
-                        specific=f"{title} for {node.title}",
-                        measurable=f"Define measurable output for {title}",
-                        relevant=f"Supports {node.title}",
-                    ),
-                )
+        if len(cleaned) < min_children or len(cleaned) > max_children:
+            raise RuntimeError(
+                f"OpenAI decompose output for '{node.title}' must contain between "
+                f"{min_children} and {max_children} valid child goals."
             )
-        return cleaned[:max_children]
+        return cleaned
 
     @staticmethod
-    def _ensure_question_count(node: Node, context: str, questions: list[BaselineQuestion]) -> list[BaselineQuestion]:
-        if 4 <= len(questions) <= 8:
-            return questions
-        root_title = node.title
-        parent_title = None
-        for line in context.splitlines():
-            if line.startswith("ROOT_TITLE:"):
-                root_title = line.split(":", 1)[1].strip() or root_title
-            if line.startswith("PARENT_TITLE:"):
-                parent_title = line.split(":", 1)[1].strip() or None
-        fallback = prompts.build_baseline_questions(root_title, parent_title, node.title)
-        return fallback[:8]
+    def _ensure_question_count(
+        node: Node, context: str, questions: list[BaselineQuestion]
+    ) -> list[BaselineQuestion]:
+        del context
+        if not 4 <= len(questions) <= 8:
+            raise RuntimeError(
+                f"OpenAI baseline question output for '{node.title}' must contain "
+                "between 4 and 8 questions."
+            )
+        for question in questions:
+            if (
+                not question.question.strip()
+                or not question.guide.strip()
+                or not question.research_basis.strip()
+            ):
+                raise RuntimeError(
+                    f"OpenAI baseline question output for '{node.title}' must include "
+                    "non-empty question, guide, and research_basis fields."
+                )
+            if question.question.count("?") > 1:
+                raise RuntimeError(
+                    f"OpenAI baseline question output for '{node.title}' must ask "
+                    "one question per item."
+                )
+        return questions
 
     @staticmethod
     def _first_answer(qa_pairs: list[BaselineQA], categories: set[str]) -> str:
@@ -216,52 +209,51 @@ class OpenAIProvider:
         return ""
 
     @staticmethod
+    def _compact_text(value: str | None, fallback: str, max_chars: int) -> str:
+        text = " ".join((value or "").split()) or fallback
+        if len(text) <= max_chars:
+            return text
+
+        clipped = text[: max_chars - 3].rsplit(" ", 1)[0].rstrip(" ,.;:")
+        if not clipped:
+            clipped = text[: max_chars - 3].rstrip(" ,.;:")
+        return f"{clipped}..."
+
+    @staticmethod
     def _normalize_plan(output: PlanOutput, node: Node) -> PlanOutput:
-        tasks = output.plan.tasks[:6]
-        if len(tasks) < 3:
-            tasks.extend(
-                [
-                    Task(
-                        title=f"Confirm scope for {node.title}",
-                        description="Validate scope boundaries and acceptance criteria.",
-                        success_criteria="Scope approved by owner.",
-                        depends_on=[],
-                        estimate_hours=4.0,
-                        relative_timing="Week 1",
-                        due="TBD",
-                    ),
-                    Task(
-                        title=f"Execute core work for {node.title}",
-                        description="Deliver planned outputs and track completion.",
-                        success_criteria="Core outputs delivered and reviewed.",
-                        depends_on=[f"Confirm scope for {node.title}"],
-                        estimate_hours=12.0,
-                        relative_timing="Week 2-3",
-                        due="TBD",
-                    ),
-                    Task(
-                        title=f"Review and close for {node.title}",
-                        description="Evaluate outcomes and close open issues.",
-                        success_criteria="Review complete and next actions captured.",
-                        depends_on=[f"Execute core work for {node.title}"],
-                        estimate_hours=4.0,
-                        relative_timing="Week 4",
-                        due="TBD",
-                    ),
-                ]
+        tasks = output.plan.tasks
+        if len(tasks) < 3 or len(tasks) > 6:
+            raise RuntimeError(
+                f"OpenAI plan output for '{node.title}' must contain between 3 and 6 tasks."
             )
 
         normalized_tasks: list[Task] = []
-        for task in tasks[:6]:
+        for task in tasks:
             normalized_tasks.append(
                 Task(
-                    title=task.title.strip() or f"Task for {node.title}",
-                    description=task.description,
-                    success_criteria=task.success_criteria.strip() or "Definition of done is documented.",
+                    title=OpenAIProvider._compact_text(
+                        task.title,
+                        f"Task for {node.title}",
+                        54,
+                    ),
+                    description=OpenAIProvider._compact_text(
+                        task.description,
+                        "Complete the next concrete step.",
+                        110,
+                    ),
+                    success_criteria=OpenAIProvider._compact_text(
+                        task.success_criteria,
+                        "Definition of done is documented.",
+                        100,
+                    ),
                     depends_on=task.depends_on,
                     estimate_hours=task.estimate_hours,
-                    relative_timing=task.relative_timing or "TBD",
-                    due=task.due or "TBD",
+                    relative_timing=OpenAIProvider._compact_text(
+                        task.relative_timing,
+                        "TBD",
+                        32,
+                    ),
+                    due=OpenAIProvider._compact_text(task.due, "TBD", 40),
                 )
             )
         output.plan.tasks = normalized_tasks
@@ -297,7 +289,7 @@ class OpenAIProvider:
             prompts.build_baseline_questions_input(node=node, context=context),
         )
         questions = self._ensure_question_count(node, context, parsed.questions)
-        return questions[:8]
+        return questions
 
     def baseline_apply(
         self,

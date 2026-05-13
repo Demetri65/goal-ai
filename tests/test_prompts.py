@@ -9,20 +9,36 @@ def test_decompose_prompt_constraints_present():
     assert "collectively cover" in text
     assert "do not use ampersands" in text
     assert "subgoal n" in text
+    assert "chronological display order" in text
+    assert "sequential" in text
+    assert "parallel" in text
+    assert "transitive" in text
+    assert "left to right" in text
+    assert "cycles" in text
 
 
 def test_baseline_question_prompt_constraints_present():
     text = prompts.baseline_questions_instructions().lower()
     assert "4 to 8" in text
+    assert "5 to 7" in text
+    assert "exactly one question" in text
+    assert "research-backed methods" in text
     assert "achievable" in text
     assert "timebound" in text or "time_bound" in text
-    assert "constraints and risks" in text
+    assert "specific and measurable" in text
+    assert "constraints" in text
+    assert "risks" in text
+    assert "guide" in text
+    assert "research_basis" in text
 
 
 def test_baseline_apply_prompt_constraints_present():
     text = prompts.baseline_apply_instructions().lower()
     assert "smart_patch.achievable" in text
     assert "smart_patch.time_bound" in text
+    assert "smart_patch.specific" in text
+    assert "smart_patch.measurable" in text
+    assert "smart_patch.relevant" in text
     assert "same parent layer" in text
 
 
@@ -32,6 +48,16 @@ def test_plan_prompt_constraints_present():
     assert "depends_on" in text
     assert "estimate_hours" in text
     assert "due and relative_timing" in text
+    assert "do not default to five" in text
+    assert "sibling task counts" in text
+    assert "sibling plan task details" in text
+    assert "overlapping tasks" in text
+    assert "chronological execution order" in text
+    assert "current smart timebound" in text
+    assert "dependencies forward in time" in text
+    assert "title under 54 characters" in text
+    assert "description under 110 characters" in text
+    assert "prefer 3 or 4 tasks" in text
 
 
 def test_build_decompose_input_mentions_target_and_context():
@@ -61,7 +87,12 @@ def test_build_baseline_questions_auto_generated_constraints():
     assert "time_bound" in categories
     assert "constraints" in categories
     assert "unknowns" in categories
+    assert "assumptions" in categories
 
     question_text = " ".join(item.question for item in questions).lower()
     assert "volunteer coordination" in question_text
     assert "operations" in question_text or "10k charity run" in question_text
+    assert all(item.guide for item in questions)
+    assert all(item.research_basis for item in questions)
+    assert all(item.question.count("?") <= 1 for item in questions)
+    assert all(len(item.question) <= 100 for item in questions)

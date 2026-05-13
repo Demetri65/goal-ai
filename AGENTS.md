@@ -10,8 +10,9 @@ This repository is a **research prototype scaffold**. Optimize for **clarity** a
 ## Validation
 - After changes, run:
   - `python -m pytest -q`
-  - and (if you modify CLI behavior) run a quick smoke command like:
-    - `smartgot run --goal "test"`
+  - `pnpm lint`
+  - `pnpm typecheck`
+  - `pnpm build`
 
 ## Output expectations
 - When fixing an issue, include:

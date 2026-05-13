@@ -3,8 +3,13 @@
 ## Dev
 
 ```bash
-pnpm install
 pnpm dev
+```
+
+Run from the repo root. For a web-only dev session:
+
+```bash
+pnpm dev:web
 ```
 
 Set API origin if needed:

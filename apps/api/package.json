@@ -1,0 +1,10 @@
+{
+  "name": "smartgot-api",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "dev": "cd ../.. && python -m uvicorn apps.api.main:app --reload --host 127.0.0.1 --port 8001",
+    "lint": "cd ../.. && python -m ruff check src apps tests && python -m ruff format --check src apps tests",
+    "test": "cd ../.. && python -m pytest -q"
+  }
+}
