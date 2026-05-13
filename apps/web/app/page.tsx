@@ -288,6 +288,15 @@ export default function HomePage() {
     setChatInput("");
   }, []);
 
+  const resetGraphToWelcome = useCallback(() => {
+    setGraphData(null);
+    selectedNodeIdRef.current = "root";
+    setSelectedNodeId("root");
+    setWorkflowStage("welcome");
+    resetDraftingState();
+    setError(null);
+  }, [resetDraftingState]);
+
   const applyGraphPayload = useCallback(
     (
       payload: GraphResponse,
@@ -480,10 +489,7 @@ export default function HomePage() {
             return;
           }
           if (graphMissing(message)) {
-            setGraphData(null);
-            setSelectedNodeId("root");
-            setWorkflowStage("welcome");
-            setError(null);
+            resetGraphToWelcome();
           } else {
             setError(message);
           }
@@ -500,7 +506,7 @@ export default function HomePage() {
     return () => {
       cancelled = true;
     };
-  }, [applyGraphPayload, graphPath, sessionId]);
+  }, [applyGraphPayload, graphPath, resetGraphToWelcome, sessionId]);
 
   useEffect(() => {
     if (!graph || activeJobId) {
@@ -515,14 +521,17 @@ export default function HomePage() {
             const externalChange = Date.now() - lastLocalMutationAtRef.current > 2500;
             await refreshGraph({ keepStage: externalChange ? false : undefined });
           }
-        } catch {
-          // Ignore polling errors until the next user action.
+        } catch (err) {
+          const message = err instanceof Error ? err.message : String(err);
+          if (graphMissing(message)) {
+            resetGraphToWelcome();
+          }
         }
       })();
     }, 4000);
 
     return () => window.clearInterval(interval);
-  }, [activeJobId, graph, graphPath, refreshGraph]);
+  }, [activeJobId, graph, graphPath, refreshGraph, resetGraphToWelcome]);
 
   useEffect(() => {
     if (loading) {
@@ -617,6 +626,10 @@ export default function HomePage() {
       } catch (err) {
         if (!cancelled) {
           const message = err instanceof Error ? err.message : String(err);
+          if (graphMissing(message)) {
+            resetGraphToWelcome();
+            return;
+          }
           setError(message);
           setDraftingParentId(focusParent.id);
           setDraftingQuestionsError(message);
@@ -636,6 +649,7 @@ export default function HomePage() {
     draftingQuestions.length,
     focusParent,
     graphPath,
+    resetGraphToWelcome,
     workflowStage,
   ]);
 
