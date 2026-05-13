@@ -184,6 +184,15 @@ async def _submit_graph_job(kind: str, operation: JobOperation) -> JobAccepted:
     return JobAccepted(job_id=record.id, status=record.status)
 
 
+@app.get("/")
+def root() -> dict[str, str]:
+    return {
+        "status": "ok",
+        "service": "SMART-GoT API",
+        "health": "/health",
+    }
+
+
 @app.get("/health")
 def health() -> dict[str, str]:
     return {"status": "ok"}
