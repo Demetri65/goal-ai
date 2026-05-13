@@ -1230,12 +1230,6 @@ export default function HomePage() {
   const renderWelcome = () => (
     <div className="flex h-screen w-full items-center justify-center px-6">
       <div className="w-full max-w-2xl rounded-[28px] border border-border bg-card/90 px-8 py-12 text-center shadow-[0_36px_90px_rgba(0,0,0,0.42)]">
-        <Badge
-          variant="outline"
-          className="mb-5 rounded-full border-white/10 bg-white/[0.03] px-3 py-1"
-        >
-          {graph ? "Replace goal" : "Canvas-first"}
-        </Badge>
         <h1 className="text-4xl font-semibold tracking-[-0.04em] text-white">Start with a goal</h1>
         <div className="mt-3 text-sm text-white/48">
           The graph becomes the primary workspace as soon as the goal is created.

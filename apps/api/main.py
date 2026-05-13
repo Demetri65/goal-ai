@@ -73,13 +73,26 @@ _load_repo_env()
 app = FastAPI(title="SMART-GoT Sidecar API", version="0.1.0")
 registry = JobRegistry()
 
+
+def _split_env_list(name: str) -> list[str]:
+    return [
+        item.strip().rstrip("/")
+        for item in os.getenv(name, "").split(",")
+        if item.strip()
+    ]
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://127.0.0.1:3000",
         "http://localhost:3000",
+        *_split_env_list("SMARTGOT_CORS_ORIGINS"),
     ],
-    allow_origin_regex=r"^https?://(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?$",
+    allow_origin_regex=(
+        os.getenv("SMARTGOT_CORS_ORIGIN_REGEX")
+        or r"^(https?://(localhost|127\.0\.0\.1|0\.0\.0\.0)(:\d+)?|https://[a-z0-9-]+\.vercel\.app)$"
+    ),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
