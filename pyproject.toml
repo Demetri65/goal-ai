@@ -28,6 +28,9 @@ dev = [
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
+[tool.vercel]
+entrypoint = "app.py"
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"
