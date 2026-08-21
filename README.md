@@ -1,61 +1,70 @@
-# SMART-GoT (lean prototype)
+# Goal AI
 
-A minimal research prototype for SMART goal decomposition into workstreams, served through a
-FastAPI backend and Next.js web app.
+An AI planning prototype that turns a broad goal into measurable workstreams, dependency-aware steps, and progress updates through a FastAPI API and Next.js interface.
 
-## Install (dev)
+## What it demonstrates
+
+- Structured LLM outputs validated with Pydantic models
+- Goal decomposition into explicit workstreams and graph relationships
+- Provider boundaries that allow deterministic test doubles
+- A typed FastAPI and Next.js workflow in a small monorepo
+
+## Architecture
+
+```mermaid
+flowchart LR
+    U[Next.js interface] --> A[FastAPI API]
+    A --> E[Planning engine]
+    E --> P[Prompt and schema layer]
+    P --> L[LLM provider]
+    E --> S[Session and plan stores]
+    E --> U
+```
+
+The FastAPI sidecar exposes typed graph and planning endpoints. The planning engine applies
+goal decomposition, baseline answers, dependency ordering, plan generation, and progress
+updates to Pydantic graph models. The API saves graph state and UI session state while the
+Next.js interface renders and updates the staged workflow.
+
+## Planning flow
+
+1. Create a goal graph through the API or interface.
+2. Decompose the goal into workstreams with ordered sibling dependencies.
+3. Collect baseline answers to refine the SMART fields, assumptions, constraints, and unknowns.
+4. Generate a chronological task plan for a selected workstream and toggle task progress as work
+   is completed.
+
+The production provider requests structured responses and validates them against Pydantic
+schemas. Tests can use the deterministic `MockProvider` at the same provider boundary.
+
+## Local development
+
+Create a virtual environment, install the Python and JavaScript dependencies, and configure an
+OpenAI key for live model calls:
 
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev]"
+python -m pip install -e '.[dev]'
 pnpm install
 export OPENAI_API_KEY=your-token
 ```
 
-You can also put `OPENAI_API_KEY=...` in the repo-root `.env` or `.env.local`. The FastAPI
-sidecar now loads those files on startup and does not override already-exported shell values.
+You can instead place `OPENAI_API_KEY=...` in the repository-root `.env` or `.env.local`. The
+FastAPI sidecar loads those files on startup without replacing an exported shell value.
 
-## Local development
-
-Start the API and web app together from the repo root:
+Start the API and web app together from the repository root:
 
 ```bash
 pnpm dev
 ```
 
-This runs:
-
-- FastAPI on `http://127.0.0.1:8001`
-- Next.js on `http://127.0.0.1:3000`
-
-Set `NEXT_PUBLIC_SMARTGOT_API` if the web app should talk to a different API origin.
-Generation endpoints require `OPENAI_API_KEY`. Without it, graph generation and planning fail with a clear API error instead of using mock content.
-
-## API bootstrap
-
-Create a graph with the API instead of a CLI command:
-
-```bash
-curl -X POST http://127.0.0.1:8001/api/v1/graph/init \
-  -H 'Content-Type: application/json' \
-  -d '{"path":"out/graph.json","goal":"Plan a 10k charity run","overwrite":true}'
-```
-
-## Core staged workflow endpoints
-
-- `POST /api/v1/graph/init`
-- `GET /api/v1/graph`
-- `GET /api/v1/baseline/questions`
-- `POST /api/v1/jobs/layer-build`
-- `POST /api/v1/focus`
-- `POST /api/v1/jobs/plan-generate`
-- `POST /api/v1/jobs/plan-replace`
-- `POST /api/v1/jobs/task-toggle`
-- `GET /api/v1/jobs/{job_id}`
-- `GET /api/v1/jobs/{job_id}/events`
+This serves FastAPI at `http://127.0.0.1:8001` and Next.js at `http://127.0.0.1:3000`.
+Set `NEXT_PUBLIC_SMARTGOT_API` when the web app should use a different API origin.
 
 ## Validation
+
+Run the full local verification suite from the repository root:
 
 ```bash
 python -m pytest -q
@@ -63,3 +72,22 @@ pnpm lint
 pnpm typecheck
 pnpm build
 ```
+
+The test suite uses deterministic provider doubles, so these checks do not require an OpenAI
+API key.
+
+## Repository structure
+
+```text
+apps/
+  api/              FastAPI sidecar, typed endpoint models, jobs, and session storage
+  web/              Next.js interface and graph workflow components
+src/smart_got/      Planning engine, Pydantic models, prompts, providers, and graph storage
+tests/              Engine, model, provider, prompt, and API tests
+```
+
+## Current limitations
+
+An OpenAI API key is required for live model calls; generation endpoints return a clear API
+error when it is unavailable. This repository is a research prototype rather than a production
+task-management service.
